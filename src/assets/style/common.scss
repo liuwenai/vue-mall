@@ -1,0 +1,326 @@
+.el-upload--picture-card,
+.el-upload-dragger {
+    -webkit-box-sizing: border-box;
+    cursor: pointer
+}
+
+.el-upload:focus .el-upload-dragger {
+    border-color: #409EFF
+}
+
+.el-upload-dragger {
+    background-color: #fff;
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    box-sizing: border-box;
+    width: 360px;
+    height: 180px;
+    text-align: center;
+    position: relative;
+    overflow: hidden
+}
+
+.el-upload-dragger .el-icon-upload {
+    font-size: 67px;
+    color: #C0C4CC;
+    margin: 40px 0 16px;
+    line-height: 50px
+}
+
+.el-upload-dragger+.el-upload__tip {
+    text-align: center
+}
+
+.el-upload-dragger~.el-upload__files {
+    border-top: 1px solid #DCDFE6;
+    margin-top: 7px;
+    padding-top: 5px
+}
+
+.el-upload-dragger .el-upload__text {
+    color: #606266;
+    font-size: 14px;
+    text-align: center
+}
+
+.el-upload-dragger .el-upload__text em {
+    color: #409EFF;
+    font-style: normal
+}
+
+.el-upload-dragger:hover {
+    border-color: #409EFF
+}
+
+.el-upload-dragger.is-dragover {
+    background-color: rgba(32, 159, 255, .06);
+    border: 2px dashed #409EFF
+}
+
+.el-upload-list {
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+.el-form-item {
+    margin-bottom: 4px;
+}
+
+.theme-d2 .d2-theme-container .d2-theme-container-main .d2-theme-container-main-body .container-component .d2-container-full .d2-container-full__header {
+    background: #fff;
+}
+
+.d2-layout-header-aside-group .d2-layout-header-aside-content .d2-theme-container .d2-theme-container-main .d2-theme-container-main-body .container-component .d2-container-full .d2-container-full__body {
+    padding: 0 0;
+    flex-grow: 1;
+    overflow-y: hidden;
+}
+
+.mediabtn {
+    padding: 5px 10px;
+}
+
+.el-table td,
+.el-table th {
+    padding: 2px 0;
+}
+
+
+.el-input__inner {
+    height: 30px;
+    line-height: 30px;
+}
+
+.el-input__icon {
+    line-height: 30px;
+}
+
+.el-form-item__content {
+    line-height: 30px;
+}
+
+.el-table thead {
+    color: #606266;
+}
+
+.el-table {
+    font-size: 12px;
+}
+
+.el-table thead {
+    background-color: #606266;
+}
+
+.grid-header {
+    padding: 1px 1px 2px 1px !important;
+}
+
+.grid-footer {
+    padding: 2px 1px 2px 1px !important;
+}
+
+.topHorizontal {
+    display: flex !important;
+    align-items: flex-end !important;
+}
+
+.d2-layout-header-aside-group .d2-layout-header-aside-content .d2-theme-container .d2-theme-container-main .d2-theme-container-main-body .container-component .d2-container-full .d2-container-full__header {
+    padding: 1px 1px 2px 1px !important;
+}
+
+.d2-layout-header-aside-group .d2-layout-header-aside-content .d2-theme-container .d2-theme-container-main .d2-theme-container-main-body .container-component .d2-container-full .d2-container-full__footer {
+    padding: 1px 1px 2px 1px !important;
+}
+
+.grid-footer .el-pagination {
+    padding: 0;
+}
+
+.grid-footer .el-button--mini,
+.el-button--mini.is-round {
+    padding: 7px 15px !important;
+}
+
+.tyyks-row .el-col:last-child {
+    padding-left: 2px;
+}
+
+.tyyks-row .el-col:first-child {
+    padding-right: 2px;
+    border-right: 1px solid #eeeeee;
+}
+
+.el-dialog__wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    margin: 0;
+    z-index: 2;
+}
+
+.el-dialog__header,
+.el-dialog__footer {
+    padding: 10px 20px;
+}
+
+.el-dialog__header {
+    border-bottom: 1px solid #ddd;
+}
+
+.el-dialog__footer {
+    border-top: 1px solid #ddd;
+}
+
+.el-menu--popup-bottom-start {
+    margin-top: -5px;
+    border-top: 1px solid #ccc;
+}
+
+.el-checkbox+.el-checkbox {
+    margin-left: 10px;
+}
+
+.el-table-column--selection .cell {
+    padding-right: 10px;
+}
+
+.el-dialog__headerbtn {
+    top: 14px;
+}
+
+.el-pagination {
+    padding: 0 5px;
+}
+
+.el-dialog__body {
+    padding: 0 2px;
+}
+
+.el-dialog__footer {
+    padding: 2px;
+}
+
+.el-form-item--mini.el-form-item,
+.el-form-item--small.el-form-item {
+    margin-bottom: 2px;
+}
+
+.mt {
+    margin-top: 4px !important;
+}
+
+/*
+.el-select .el-input {
+    width: 120px;
+}
+*/
+
+.mb {
+    margin-bottom: 4px !important;
+}
+
+.el-button--mini,
+.el-button--mini.is-round {
+    padding: 6px 9px;
+}
+
+.viewer-canvas>img {
+    height: auto;
+    margin: 15px auto;
+    max-width: 90% !important;
+    width: auto;
+    z-index: 3;
+}
+
+.el-form-item__label {
+    line-height: 30px;
+}
+
+.el-form--inline .el-form-item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    vertical-align: top;
+}
+
+
+.edui-editor-imagescale {
+    width: auto !important;
+    height: auto !important;
+}
+
+.edui-default .edui-editor {
+    position: static !important;
+}
+
+.edui-default .edui-editor-toolbarbox {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.edui-default .edui-editor-iframeholder {
+    position: static !important;
+    margin-top: 168px;
+}
+
+.tbasehead {
+    display: flex;
+    align-items: center;
+}
+
+.edui-default .edui-toolbar .edui-combox .edui-combox-body {
+    height: 20px;
+}
+
+.edui-default .edui-button-body,
+.edui-splitbutton-body,
+.edui-menubutton-body,
+.edui-combox-body {
+    height: 20px;
+}
+
+.el-tag+.el-tag {
+    margin-left: 10px;
+}
+
+.button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+}
+
+.edui-default .edui-popup {
+    position: fixed !important;
+    top: 90% !important;
+    left: 75% !important;
+    height: 27px !important;
+}
+
+.d2-layout-header-aside-group .d2-layout-header-aside-content .d2-theme-container .d2-theme-container-main .d2-theme-container-main-body .container-component .d2-container-card .d2-container-card__header {
+    padding: 4px;
+}
+.el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .el-table__body tr.current-row>td {
+    color: #fff;
+    background-color: #409EFF!important;
+}
+.el-tabs__content {
+    overflow: scroll;
+    position: relative
+}
+
+.el-tabs--border-card>.el-tabs__content {
+    padding: 2px;
+}

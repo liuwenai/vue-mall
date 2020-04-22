@@ -1,0 +1,1 @@
+yarn add -D file://Users/liuyang/workspace/code/vueWorkspace/zysoft/vue-cli-plugin-zysoft  && vue invoke vue-cli-plugin-zysoft 
