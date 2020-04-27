@@ -36,13 +36,13 @@ function errorLog (error) {
   })
 }
 
-// export const baseURL = 'http://www.s0393.com:10008' // 测试地址配置
+export const baseURL = 'http://localhost:9090'
 // export const baseURL = 'http://www.s0393.com:8092' // frpc 测试地址配置
 // export const baseURL = '' // 打包
 // 创建一个 axios 实例
 const service = axios.create({
-  baseURL: process.env.VUE_APP_API,
-  // baseURL,
+  // baseURL: process.env.VUE_APP_API,
+  baseURL,
   timeout: 5000 // 请求超时时间
 })
 
