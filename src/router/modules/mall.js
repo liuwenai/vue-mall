@@ -4,8 +4,8 @@
  */
 export default [
     {
-      path: '/user',
-      name: 'user',
+      path: '/muser',
+      name: 'muser',
       component: () => import('@/views/mall/user'),
       meta: {
         // cache: true,

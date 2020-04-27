@@ -6,12 +6,14 @@
           <el-form-item v-for="(item,index) in query.cols" :key="index">
             <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
               <el-select v-model="item.col" slot="prepend" placeholder="请选择" style="width:110px;">
-                <el-option label="书名" value="title"></el-option>
-                <el-option label="作者" value="author"></el-option>
-                <el-option label="价格" value="price"></el-option>
-                <el-option label="库存" value="kcsl"></el-option>
-                <el-option label="邮费" value="express"></el-option>
-                <el-option label="评价" value="fpj"></el-option>
+                <el-option label="订单人姓名" value="fddname"></el-option>
+                <el-option label="订单编号" value="fddbh"></el-option>
+                <el-option label="订单地址" value="fdddz"></el-option>
+                <el-option label="订单时间" value="fddsj"></el-option>
+                <el-option label="订单数量" value="fddsl"></el-option>
+                <el-option label="订单单价" value="fdddj"></el-option>
+                <el-option label="订单金额" value="fddje"></el-option>
+                <el-option label="订单状态" value="fddzt"></el-option>
               </el-select>
               <el-select v-model="item.type" slot="append" placeholder="请选择" style="width:70px;">
                 <el-option label="模糊" value="%"></el-option>
@@ -68,8 +70,8 @@
       <el-table-column
         min-width="130px"
         sortable="custom"
-        prop="title"
-        label="书名"
+        prop="fddname"
+        label="订单人姓名"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -77,17 +79,17 @@
       <el-table-column
         min-width="110px"
         sortable="custom"
-        prop="author"
-        label="作者"
+        prop="fdddh"
+        label="订单电话"
         show-overflow-tooltip
         align="center"
         header-align="center"
       ></el-table-column>
       <el-table-column
-        min-width="90px"
+        min-width="130px"
         sortable="custom"
-        prop="price"
-        label="价格"
+        prop="fdddz"
+        label="订单地址"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -95,8 +97,8 @@
       <el-table-column
         min-width="140px"
         sortable="custom"
-        prop="kcsl"
-        label="库存"
+        prop="fddbh"
+        label="订单编号"
         show-overflow-tooltip
         header-align="center"
         align="center"
@@ -104,8 +106,8 @@
       <el-table-column
         min-width="140px"
         sortable="custom"
-        prop="express"
-        label="邮费"
+        prop="fddsj"
+        label="订单时间"
         show-overflow-tooltip
         align="left"
         header-align="center"
@@ -113,25 +115,48 @@
       <el-table-column
         min-width="110px"
         sortable="custom"
-        prop="fpj"
-        label="评价"
+        prop="fddsl"
+        label="订单数量"
         show-overflow-tooltip
         align="left"
         header-align="center"
       ></el-table-column>
-      
-
-      <!-- <el-table-column label="操作" header-align="center" align="center" width="145" fixed="right">
-        <template slot-scope="scope">
-          <el-button size="mini" class="mediabtn" @click="operate('edit',scope.row)">编辑</el-button>
-          <el-button
-            type="danger"
-            size="mini"
-            class="mediabtn"
-            @click="handleDel('scope.$index',scope.row)"
-          >删除</el-button>
-        </template>
-      </el-table-column>-->
+      <el-table-column
+        min-width="110px"
+        sortable="custom"
+        prop="fdddj"
+        label="订单单价"
+        show-overflow-tooltip
+        align="left"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="110px"
+        sortable="custom"
+        prop="fddje"
+        label="订单金额"
+        show-overflow-tooltip
+        align="left"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="110px"
+        sortable="custom"
+        prop="fddyf"
+        label="订单邮费"
+        show-overflow-tooltip
+        align="left"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="110px"
+        sortable="custom"
+        prop="fddzt"
+        label="订单状态"
+        show-overflow-tooltip
+        align="left"
+        header-align="center"
+      ></el-table-column>
     </el-table>
     <template slot="footer">
       <div ref="footer">
@@ -158,23 +183,35 @@
         <!-- <el-form-item prop="fdwbh" label="单位编号" :error="form.errors.fdwbh">
           <el-input v-model="form.fields.fdwbh" placeholder="单位编号"></el-input>
         </el-form-item>-->
-        <el-form-item prop="title" label="书名" :error="form.errors.title">
-          <el-input v-model="form.fields.title" placeholder="书名"></el-input>
+        <el-form-item prop="fddname" label="订单人姓名" :error="form.errors.fddname">
+          <el-input v-model="form.fields.fddname" placeholder="订单人姓名"></el-input>
         </el-form-item>
-        <el-form-item prop="author" label="作者" :error="form.errors.author">
-          <el-input v-model="form.fields.author" placeholder="作者"></el-input>
+        <el-form-item prop="fdddh" label="订单电话" :error="form.errors.fdddh">
+          <el-input v-model="form.fields.fdddh" placeholder="订单电话"></el-input>
         </el-form-item>
-        <el-form-item prop="price" label="价格" :error="form.errors.price">
-          <el-input v-model="form.fields.price" placeholder="价格"></el-input>
+        <el-form-item prop="fdddz" label="订单地址" :error="form.errors.fdddz">
+          <el-input v-model="form.fields.fdddz" placeholder="订单地址"></el-input>
         </el-form-item>
-        <el-form-item prop="fkc" label="库存" :error="form.errors.fkc">
-          <el-input v-model="form.fields.fkc" placeholder="库存"></el-input>
+        <el-form-item prop="fddbh" label="订单编号" :error="form.errors.fddbh">
+          <el-input v-model="form.fields.fddbh" placeholder="订单编号"></el-input>
         </el-form-item>
-        <el-form-item prop="express" label="邮费" :error="form.errors.express">
-          <el-input v-model="form.fields.express" disabled placeholder="邮费"></el-input>
+        <el-form-item prop="fddsj" label="订单时间" :error="form.errors.fddsj">
+          <el-input v-model="form.fields.fddsj" disabled placeholder="订单时间"></el-input>
         </el-form-item>
-        <el-form-item prop="fpj" label="评价" :error="form.errors.fpj">
-          <el-input v-model="form.fields.fpj" placeholder="评价"></el-input>
+        <el-form-item prop="fddsl" label="订单数量" :error="form.errors.fddsl">
+          <el-input v-model="form.fields.fddsl" placeholder="订单数量"></el-input>
+        </el-form-item>
+        <el-form-item prop="fdddj" label="订单单价" :error="form.errors.fdddj">
+          <el-input v-model="form.fields.fdddj" placeholder="订单单价"></el-input>
+        </el-form-item>
+        <el-form-item prop="fddje" label="订单金额" :error="form.errors.fddje">
+          <el-input v-model="form.fields.fddje" placeholder="订单金额"></el-input>
+        </el-form-item>
+        <el-form-item prop="fddyf" label="订单邮费" :error="form.errors.fddyf">
+          <el-input v-model="form.fields.fddyf" disabled placeholder="订单邮费"></el-input>
+        </el-form-item>
+        <el-form-item prop="fddzt" label="订单状态" :error="form.errors.fddzt">
+          <el-input v-model="form.fields.fddzt" placeholder="订单状态"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -233,41 +270,55 @@ export default {
         visible: false,
         edit: false,
         rules: {
-          title: [
-            { required: true, message: "书名不能为空", trigger: "blur" },
-            { type: "string", message: "书名必须为字符串", trigger: "blur" }
+          fddname: [
+            { required: true, message: "订单人姓名不能为空", trigger: "blur" },
+            { type: "string", message: "订单人姓名必须为字符串", trigger: "blur" }
           ],
-          author: [
-            { required: true, message: "作者不能为空", trigger: "blur" },
-            { type: "string", message: "作者必须为字符串", trigger: "blur" }
+          fdddh: [
+            { required: true, message: "订单电话不能为空", trigger: "blur" },
+            { type: "string", message: "订单电话必须为字符串", trigger: "blur" }
           ],
-          price: [
-            { required: true, message: "价格不能为空", trigger: "blur" },
-            { pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
-              message: "价格格式有误",
-              trigger: "blur" }
+          fdddz: [
+            { required: true, message: "订单地址不能为空", trigger: "blur" },
+            { type: "string", message: "订单地址必须为字符串", trigger: "blur" }
           ],
-          kcsl: [
-            { required: true, message: "库存不能为空", trigger: "blur" },
-            { type: "string", message: "库存必须为字符串", trigger: "blur" }
+          fddbh: [
+            { required: true, message: "订单编号不能为空", trigger: "blur" },
+            { type: "string", message: "订单编号必须为字符串", trigger: "blur" }
           ],
-          express: [
-            { required: true, message: "邮费不能为空", trigger: "blur" },
-            { type: "string", message: "邮费必须为字符串", trigger: "blur" }
+          fddsj: [
+            { required: true, message: "订单时间不能为空", trigger: "blur" },
+            { type: "string", message: "订单时间必须为字符串", trigger: "blur" }
           ],
-          fpj: [
-            { required: true, message: "评价不能为空", trigger: "blur" },
-            { type: "string", message: "评价必须为字符串", trigger: "blur" }
+          fdddj: [
+            { required: true, message: "订单单价不能为空", trigger: "blur" },
+            { type: "string", message: "订单单价必须为字符串", trigger: "blur" }
+          ],
+          fddje: [
+            { required: true, message: "订单金额不能为空", trigger: "blur" },
+            { type: "string", message: "订单金额必须为字符串", trigger: "blur" }
+          ],
+          fddzt: [
+            { required: true, message: "订单状态不能为空", trigger: "blur" },
+            { type: "string", message: "订单状态必须为字符串", trigger: "blur" }
+          ],
+          fddsl: [
+            { required: true, message: "订单数量不能为空", trigger: "blur" },
+            { type: "string", message: "订单数量必须为字符串", trigger: "blur" }
           ],
         },
         errors: {},
         fields: {
-          title: "",
-          author: "",
-          price: "",
-          kcsl: "",
-          express: 6,
-          fpj: "",
+          fddname: "",
+          fdddh: "",
+          fdddz: "",
+          fddbh: "",
+          fddsj: "",
+          fdddj: "",
+          fddsl: "",
+          fddje: "",
+          fddzt: "",
+          fddyf: 6,
         }
       }
     };
@@ -473,12 +524,16 @@ export default {
     },
     reset: function() {
       this.form.fields = {
-        title: "",
-        author: "",
-        price: "",
-        kcsl: "",
-        express: 6,
-        fpj: "",
+          fddname: "",
+          fdddh: "",
+          fdddz: "",
+          fddbh: "",
+          fddsj: "",
+          fdddj: "",
+          fddsl: "",
+          fddje: "",
+          fddzt: "",
+          fddyf: 6,
       };
     },
     // 编辑数据

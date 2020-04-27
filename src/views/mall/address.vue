@@ -6,12 +6,9 @@
           <el-form-item v-for="(item,index) in query.cols" :key="index">
             <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
               <el-select v-model="item.col" slot="prepend" placeholder="请选择" style="width:110px;">
-                <el-option label="书名" value="title"></el-option>
-                <el-option label="作者" value="author"></el-option>
-                <el-option label="价格" value="price"></el-option>
-                <el-option label="库存" value="kcsl"></el-option>
-                <el-option label="邮费" value="express"></el-option>
-                <el-option label="评价" value="fpj"></el-option>
+                <el-option label="收件人姓名" value="fsjrxm"></el-option>
+                <el-option label="收件人电话" value="fsjrdh"></el-option>
+                <el-option label="地址" value="address"></el-option>
               </el-select>
               <el-select v-model="item.type" slot="append" placeholder="请选择" style="width:70px;">
                 <el-option label="模糊" value="%"></el-option>
@@ -68,8 +65,8 @@
       <el-table-column
         min-width="130px"
         sortable="custom"
-        prop="title"
-        label="书名"
+        prop="fsjrxm"
+        label="收件人姓名"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -77,8 +74,8 @@
       <el-table-column
         min-width="110px"
         sortable="custom"
-        prop="author"
-        label="作者"
+        prop="fsjrdh"
+        label="收件人电话"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -86,52 +83,12 @@
       <el-table-column
         min-width="90px"
         sortable="custom"
-        prop="price"
-        label="价格"
+        prop="address"
+        label="地址"
         show-overflow-tooltip
         align="center"
         header-align="center"
       ></el-table-column>
-      <el-table-column
-        min-width="140px"
-        sortable="custom"
-        prop="kcsl"
-        label="库存"
-        show-overflow-tooltip
-        header-align="center"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="140px"
-        sortable="custom"
-        prop="express"
-        label="邮费"
-        show-overflow-tooltip
-        align="left"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="110px"
-        sortable="custom"
-        prop="fpj"
-        label="评价"
-        show-overflow-tooltip
-        align="left"
-        header-align="center"
-      ></el-table-column>
-      
-
-      <!-- <el-table-column label="操作" header-align="center" align="center" width="145" fixed="right">
-        <template slot-scope="scope">
-          <el-button size="mini" class="mediabtn" @click="operate('edit',scope.row)">编辑</el-button>
-          <el-button
-            type="danger"
-            size="mini"
-            class="mediabtn"
-            @click="handleDel('scope.$index',scope.row)"
-          >删除</el-button>
-        </template>
-      </el-table-column>-->
     </el-table>
     <template slot="footer">
       <div ref="footer">
@@ -155,26 +112,15 @@
       @close="closeDialog('form')"
     >
       <el-form :model="form.fields" label-width="100px" :rules="form.rules" ref="form">
-        <!-- <el-form-item prop="fdwbh" label="单位编号" :error="form.errors.fdwbh">
-          <el-input v-model="form.fields.fdwbh" placeholder="单位编号"></el-input>
-        </el-form-item>-->
-        <el-form-item prop="title" label="书名" :error="form.errors.title">
-          <el-input v-model="form.fields.title" placeholder="书名"></el-input>
+        <el-form-item prop="fsjrxm" label="收件人姓名" :error="form.errors.fsjrxm">
+          <el-input v-model="form.fields.fsjrxm" placeholder="收件人姓名"></el-input>
         </el-form-item>
-        <el-form-item prop="author" label="作者" :error="form.errors.author">
-          <el-input v-model="form.fields.author" placeholder="作者"></el-input>
+        <el-form-item prop="fsjrdh" label="收件人姓名" :error="form.errors.fsjrdh">
+          <el-input v-model="form.fields.fsjrdh" placeholder="收件人姓名"></el-input>
         </el-form-item>
-        <el-form-item prop="price" label="价格" :error="form.errors.price">
-          <el-input v-model="form.fields.price" placeholder="价格"></el-input>
+        <el-form-item prop="address" label="地址" :error="form.errors.address">
+          <el-input v-model="form.fields.address" placeholder="地址"></el-input>
         </el-form-item>
-        <el-form-item prop="fkc" label="库存" :error="form.errors.fkc">
-          <el-input v-model="form.fields.fkc" placeholder="库存"></el-input>
-        </el-form-item>
-        <el-form-item prop="express" label="邮费" :error="form.errors.express">
-          <el-input v-model="form.fields.express" disabled placeholder="邮费"></el-input>
-        </el-form-item>
-        <el-form-item prop="fpj" label="评价" :error="form.errors.fpj">
-          <el-input v-model="form.fields.fpj" placeholder="评价"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -233,41 +179,24 @@ export default {
         visible: false,
         edit: false,
         rules: {
-          title: [
-            { required: true, message: "书名不能为空", trigger: "blur" },
-            { type: "string", message: "书名必须为字符串", trigger: "blur" }
+          fsjrxm: [
+            { required: true, message: "收件人姓名不能为空", trigger: "blur" },
+            { type: "string", message: "收件人姓名必须为字符串", trigger: "blur" }
           ],
-          author: [
-            { required: true, message: "作者不能为空", trigger: "blur" },
-            { type: "string", message: "作者必须为字符串", trigger: "blur" }
+          fsjrdz: [
+            { required: true, message: "收件人地址不能为空", trigger: "blur" },
+            { type: "string", message: "收件人地址必须为字符串", trigger: "blur" }
           ],
-          price: [
-            { required: true, message: "价格不能为空", trigger: "blur" },
-            { pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
-              message: "价格格式有误",
-              trigger: "blur" }
-          ],
-          kcsl: [
-            { required: true, message: "库存不能为空", trigger: "blur" },
-            { type: "string", message: "库存必须为字符串", trigger: "blur" }
-          ],
-          express: [
-            { required: true, message: "邮费不能为空", trigger: "blur" },
-            { type: "string", message: "邮费必须为字符串", trigger: "blur" }
-          ],
-          fpj: [
-            { required: true, message: "评价不能为空", trigger: "blur" },
-            { type: "string", message: "评价必须为字符串", trigger: "blur" }
+          address: [
+            { required: true, message: "地址不能为空", trigger: "blur" },
+            { type: "string", message: "地址必须为字符串", trigger: "blur" }
           ],
         },
         errors: {},
         fields: {
-          title: "",
-          author: "",
-          price: "",
-          kcsl: "",
-          express: 6,
-          fpj: "",
+          fsjrxm: "",
+          fsjrdh: "",
+          address: "",
         }
       }
     };
@@ -473,12 +402,9 @@ export default {
     },
     reset: function() {
       this.form.fields = {
-        title: "",
-        author: "",
-        price: "",
-        kcsl: "",
-        express: 6,
-        fpj: "",
+          fsjrxm: "",
+          fsjrdh: "",
+          address: "",
       };
     },
     // 编辑数据

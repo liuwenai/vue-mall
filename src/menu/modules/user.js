@@ -3,7 +3,7 @@ export default {
     title: '用户管理',
     icon: 'user-plus',
     children: (pre => [
-      { path: `${pre}user`, title: '用户列表', icon: 'vcard' },
+      { path: `${pre}muser`, title: '用户列表', icon: 'vcard' },
     ])('/')
   }
   
