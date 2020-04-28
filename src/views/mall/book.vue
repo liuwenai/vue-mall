@@ -319,7 +319,7 @@ export default {
             this.showLoading = false;
             return;
           }
-          this.rows = response.rows;
+          this.rows = response.books;
           this.total = response.total;
           this.max = response.max;
           this.showLoading = false;

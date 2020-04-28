@@ -14,15 +14,17 @@
                     @clear="load"
                   >
                     <el-select
+                      style="width:130px;"
                       v-model="item.col"
                       slot="prepend"
                       placeholder="请选择"
-                      style="width:110px;"
+                      @change="onQuerySelect"
                     >
                       <el-option label="账号" value="userzh"></el-option>
                       <el-option label="用户名" value="usermc"></el-option>
                       <el-option label="电话" value="phone"></el-option>
                       <el-option label="密码" value="password"></el-option>
+                      <el-option label="管理员" value="isAdmin"></el-option>
                     </el-select>
                     <el-select
                       v-model="item.type"
@@ -52,9 +54,7 @@
                   <el-button type="primary" size="mini" @click="load"
                     >查询</el-button
                   >
-                  <el-button type="primary" size="mini" @click="groupQuery(16)"
-                    >组合查询</el-button
-                  >
+                  <!-- <el-button type="primary" size="mini" @click="groupQuery(8)">组合查询</el-button> -->
                 </el-form-item>
               </div>
               <el-form-item>
@@ -65,13 +65,20 @@
                   type="primary"
                   size="mini"
                   :disabled="canOperate"
+                  @click="initFkjh"
+                  >新增地址</el-button
+                >
+                <el-button
+                  type="primary"
+                  :disabled="canOperate"
+                  size="mini"
                   @click="onEdit"
                   >编辑</el-button
                 >
                 <el-button
                   type="primary"
+                  :disabled="canSh"
                   size="mini"
-                  :disabled="canOperate"
                   @click="onDelete"
                   >删除</el-button
                 >
@@ -91,6 +98,8 @@
               @selection-change="selsChange"
               @sort-change="onSortChange"
               @row-click="onRowClick"
+              @row-contextmenu="onShowMenu"
+              :cell-style="onCellStyle"
               stripe
             >
               <el-table-column
@@ -165,8 +174,16 @@
       <el-col :span="24">
         <div class="grid-content bg-purple">
           <div class="grid-main">
-            <el-tabs  type="border-card" v-model="tabname">
-              <el-tab-pane label="地址管理" name="tabaddress">
+            <el-tabs
+              type="border-card"
+              @tab-click="onTabClick"
+              v-loading="fullscreenLoading"
+              v-model="seltab"
+            >
+              <el-tab-pane label="地址列表" name="tabaddress">
+                <span slot="label">
+                  <i :class="icon" @click="onMaxTab"></i> 地址列表
+                </span>
                 <el-table
                   class="click-table"
                   ref="elxAddress"
@@ -178,6 +195,7 @@
                   border
                   @selection-change="selsChange"
                   @sort-change="onSortChange"
+                  @row-click="onRowClick"
                 >
                   <el-table-column
                     type="selection"
@@ -220,18 +238,23 @@
                   ></el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="订单管理" name="taborder">
+
+              <el-tab-pane label="订单列表" name="taborder">
+                <span slot="label">
+                  <i :class="icon" @click="onMaxTab"></i> 订单列表
+                </span>
                 <el-table
                   ref="elxOrder"
                   class="click-table"
                   :height="childTableHeight"
-                  :data="orderlist"
+                  :data="orderes"
                   v-loading="showLoading"
                   highlight-current-row
                   stripe
                   border
                   @selection-change="selsChange"
                   @sort-change="onSortChange"
+                  @row-click="onRowClick"
                 >
                   <el-table-column
                     type="selection"
@@ -342,6 +365,7 @@
         </div>
       </el-col>
     </el-row>
+    <!-- 合同增加及编辑页面 -->
     <el-dialog
       v-dialogDrag
       :title="title"
@@ -421,18 +445,17 @@ import {
   userdelete,
   userupdate,
   usersave,
-  usershow
 } from '../../api/mall/user.js'
 
 export default {
   mixins: [serversort, types, table, query, importer, check],
   data() {
     return {
-      addresslist:[],
-      orderlist:[],
-      tabname:"tabaddress",
-      showheader: true,
+      seltab: 'tabaddress',
+      iconClass: 'el-icon-top-right', // 默认图标
       firstTableHeight: 100, // 第一个表格高度
+      icon: 'el-icon-plus',
+      showheader: true,
       containerHeight: 400,
       childTableHeight: 100,
       childTempHeight: 100,
@@ -547,7 +570,7 @@ export default {
             this.showLoading = false
             return
           }
-          this.rows = response.users
+          this.rows = response.rows
           this.total = response.total
           this.max = response.max
           this.showLoading = false
@@ -730,8 +753,10 @@ export default {
     // 表格数据行点击
     onRowClick(row, col, event) {
       this.selrow = row
-      this.loadAddre();
-      this.loadOrder();
+    },
+
+    onTabClick(tab, event) {
+      console.log(tab, event)
     },
     // onDownload() {
     //   const url = fileAction("user", "download");
