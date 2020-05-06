@@ -552,7 +552,7 @@ export default {
       if (row) {
         this.form.fields.author = {
           id: row.id,
-          fmc: row.fmc
+          name: row.name
         };
       }
     },
