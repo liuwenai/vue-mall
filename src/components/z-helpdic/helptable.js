@@ -20,5 +20,13 @@ export const Helptable = {
       { width: '*', prop: 'fnote', label: '备注' }
     ],
     params: {}
+  },
+  'author':{
+    action: 'authorlist',
+    cols:[
+      {width: '90px', prop: 'name', label: '姓名'},
+      {width: '90px', prop: 'sex', label: '性别'}
+    ],
+    params: {}
   }
 }

@@ -162,7 +162,9 @@
           <el-input v-model="form.fields.title" placeholder="书名"></el-input>
         </el-form-item>
         <el-form-item prop="author.name" label="作者" :error="form.errors.author">
-          <el-input v-model="form.fields.author.name" placeholder="作者"></el-input>
+          <el-input v-model="form.fields.author.name" placeholder="作者">
+            <el-button slot="append" @click="onOpenDialog('author')">作者列表</el-button>
+          </el-input>
         </el-form-item>
         <el-form-item prop="price" label="价格" :error="form.errors.price">
           <el-input v-model="form.fields.price" placeholder="价格"></el-input>
@@ -187,6 +189,16 @@
         >提交</el-button>
       </div>
     </el-dialog>
+    <help-table-dic
+      :params="authorparams"
+      title="作者列表"
+      height="400"
+      seltype="S"
+      dicname="author"
+      :dialog-show="authorvisible"
+      @helpdata="selectAuthor"
+      @close="onCloseDialog('author')"
+    />
   </d2-container>
 </template>
 
@@ -214,6 +226,8 @@ export default {
       downloadparams: {},
       btntitle: "",
       title: "",
+      authorvisible: false,
+      authorparams: {},
       showLoading: false,
       query: {
         name: "book",
@@ -530,6 +544,21 @@ export default {
     //   this.load();
     //   this.btntitle = "";
     // }
+    onOpenDialog(type = "author") {
+      this[`${type}visible`] = true;
+    },
+    selectAuthor(row, show) {
+      this.authorvisible = show;
+      if (row) {
+        this.form.fields.author = {
+          id: row.id,
+          fmc: row.fmc
+        };
+      }
+    },
+   onCloseDialog(type = "author") {
+      this[`${type}visible`] = false;
+    },
   }
 };
 </script>
