@@ -42,9 +42,6 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" size="mini" @click="load">查询</el-button>
-            <el-button type="primary" size="mini" @click="groupQuery(16)"
-              >组合查询</el-button
-            >
           </el-form-item>
         </div>
         <el-form-item>
@@ -93,6 +90,8 @@
       @selection-change="selsChange"
       @sort-change="onSortChange"
       @row-click="onRowClick"
+      row-key="id"
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column
         type="selection"
@@ -156,7 +155,7 @@
           <el-input v-model="form.fields.fdwbh" placeholder="单位编号"></el-input>
         </el-form-item>-->
         <el-form-item prop="name" label="姓名" :error="form.errors.name">
-          <el-input v-model="form.fields.name" placeholder="书名"></el-input>
+          <el-input v-model="form.fields.name" placeholder="姓名"></el-input>
         </el-form-item>
         <el-form-item prop="sex" label="性别" :error="form.errors.sex">
           <el-input v-model="form.fields.sex" placeholder="性别"></el-input>
