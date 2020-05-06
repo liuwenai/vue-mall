@@ -4,5 +4,5 @@ import * as mall from "./mall"
 export const allApi = {
   ...system['system'],
   ...base['base'],
-  ...base['mall']
+  ...mall['mall']
 }
