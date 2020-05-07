@@ -1,22 +1,18 @@
 import axios from '@/plugin/axios'
-const prefix = "";
-
-
+const prefix = ''
 
 export const authorlist = () => {
-    return axios.get(`${prefix}author/index`);
-};
-
-export const authorupdate = params => {
-    return axios.put(`${prefix}author/update`, params)
+  return axios.get(`${prefix}author/index`)
 }
 
-
-export const authordelete = params => {
-    return axios.post(`${prefix}author/delete/${params.id}`)
+export const authorupdate = (params) => {
+  return axios.put(`${prefix}author/update`, params)
 }
 
-export const authorsave = params => {
-    return axios.get(`${prefix}author/save/`, params)
+export const authordelete = (params) => {
+  return axios.post(`${prefix}author/delete/${params.id}`)
 }
 
+export const authorsave = (params) => {
+  return axios.post(`${prefix}author/save`, params)
+}
