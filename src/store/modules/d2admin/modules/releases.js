@@ -8,7 +8,7 @@ export default {
      * @param {Object} state state
      */
     versionShow () {
-      util.log.capsule('感谢使用书籍管理系统~', `v${process.env.VUE_APP_VERSION}`)
+      util.log.capsule('感谢使用书籍后台管理系统~', `v${process.env.VUE_APP_VERSION}`)
     }
   }
 }
