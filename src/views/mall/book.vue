@@ -26,7 +26,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" size="mini" @click="load">查询</el-button>
-            <el-button type="primary" size="mini" @click="groupQuery(16)">组合查询</el-button>
+            <!-- <el-button type="primary" size="mini" @click="groupQuery(16)">组合查询</el-button> -->
           </el-form-item>
         </div>
         <el-form-item>
@@ -77,7 +77,7 @@
       <el-table-column
         min-width="110px"
         sortable="custom"
-        prop="author"
+        prop="author.name"
         label="作者"
         show-overflow-tooltip
         align="center"
@@ -160,14 +160,16 @@
         <el-form-item prop="title" label="书名" :error="form.errors.title">
           <el-input v-model="form.fields.title" placeholder="书名"></el-input>
         </el-form-item>
-        <el-form-item prop="author" label="作者" :error="form.errors.author">
-          <el-input v-model="form.fields.author" placeholder="作者"></el-input>
+        <el-form-item prop="author.name" label="作者" :error="form.errors.author">
+          <el-input v-model="form.fields.author.name" placeholder="作者">
+            <el-button slot="append" @click="onOpenDialog('author')">作者列表</el-button>
+          </el-input>
         </el-form-item>
         <el-form-item prop="price" label="价格" :error="form.errors.price">
           <el-input v-model="form.fields.price" placeholder="价格"></el-input>
         </el-form-item>
         <el-form-item prop="fkc" label="库存" :error="form.errors.fkc">
-          <el-input v-model="form.fields.fkc" placeholder="库存"></el-input>
+          <el-input v-model.number="form.fields.fkc" placeholder="库存"></el-input>
         </el-form-item>
         <el-form-item prop="express" label="邮费" :error="form.errors.express">
           <el-input v-model="form.fields.express" disabled placeholder="邮费"></el-input>
@@ -186,6 +188,16 @@
         >提交</el-button>
       </div>
     </el-dialog>
+    <help-table-dic
+      :params="authorparams"
+      title="作者列表"
+      height="400"
+      seltype="S"
+      dicname="author"
+      :dialog-show="authorvisible"
+      @helpdata="selectAuthor"
+      @close="onCloseDialog('author')"
+    />
   </d2-container>
 </template>
 
@@ -212,6 +224,8 @@ export default {
       downloadparams: {},
       btntitle: "",
       title: "",
+      authorvisible: false,
+      authorparams: {},
       showLoading: false,
       query: {
         name: "book",
@@ -235,35 +249,26 @@ export default {
             { required: true, message: "书名不能为空", trigger: "blur" },
             { type: "string", message: "书名必须为字符串", trigger: "blur" }
           ],
-          author: [
+          "author.name": [
             { required: true, message: "作者不能为空", trigger: "blur" },
             { type: "string", message: "作者必须为字符串", trigger: "blur" }
           ],
           price: [
             { required: true, message: "价格不能为空", trigger: "blur" },
-            {
-              pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
-              message: "价格格式有误",
-              trigger: "blur"
-            }
           ],
           kcsl: [
             { required: true, message: "库存不能为空", trigger: "blur" },
             { type: "string", message: "库存必须为字符串", trigger: "blur" }
           ],
-          express: [
-            { required: true, message: "邮费不能为空", trigger: "blur" },
-            { type: "string", message: "邮费必须为字符串", trigger: "blur" }
-          ],
-          fpj: [
-            { required: true, message: "评价不能为空", trigger: "blur" },
-            { type: "string", message: "评价必须为字符串", trigger: "blur" }
-          ]
+          // fpj: [
+          //   { required: true, message: "评价不能为空", trigger: "blur" },
+          //   { type: "string", message: "评价必须为字符串", trigger: "blur" }
+          // ],
         },
         errors: {},
         fields: {
           title: "",
-          author: "",
+          author: {name:""},
           price: "",
           kcsl: "",
           express: 6,
@@ -474,7 +479,7 @@ export default {
     reset: function() {
       this.form.fields = {
         title: "",
-        author: "",
+        author: {name:""},
         price: "",
         kcsl: "",
         express: 6,
@@ -537,6 +542,21 @@ export default {
     //   this.load();
     //   this.btntitle = "";
     // }
+    onOpenDialog(type = "author") {
+      this[`${type}visible`] = true;
+    },
+    selectAuthor(row, show) {
+      this.authorvisible = show;
+      if (row) {
+        this.form.fields.author = {
+          id: row.id,
+          name: row.name
+        };
+      }
+    },
+   onCloseDialog(type = "author") {
+      this[`${type}visible`] = false;
+    },
   }
 };
 </script>

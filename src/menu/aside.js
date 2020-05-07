@@ -11,8 +11,8 @@ export default [
   book,
   order,
   user,
-  admin,
-  develope,
-  flow,
-  xsheet
+  // admin,
+  // develope,
+  // flow,
+  // xsheet
 ]
