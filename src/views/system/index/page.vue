@@ -13,38 +13,36 @@
                 </div>
             </div>
           </el-col>-->
-          <el-col :span="4" class="grid-header">
-            <div class="grid-header-click" @click="onOpenRoute('/auser')">
-              <div class="bg-purple grid-header-top">涉外总人数</div>
+          <el-col :span="5" class="grid-header">
+            <div class="grid-header-click" @click="onOpenRoute('/muser')">
+              <div class="bg-purple grid-header-top">用户总人数</div>
               <div class="bg-purple grid-header-center">{{infor.zrs}}</div>
             </div>
           </el-col>
-          <el-col :span="4" class="grid-header">
+          <el-col :span="5" class="grid-header">
             <div class="grid-header-click" >
-              <div class="bg-purple grid-header-top">出国总人次</div>
+              <div class="bg-purple grid-header-top">已发货</div>
               <div class="bg-purple grid-header-center">{{infor.zcs}}</div>
             </div>
           </el-col>
-          <el-col :span="4" class="grid-header">
+          <el-col :span="5" class="grid-header">
             <div class="grid-header-click" >
-              <div class="bg-purple grid-header-top">今日证件到期人数</div>
+              <div class="bg-purple grid-header-top">待发货</div>
               <div class="bg-purple grid-header-center">{{infor.zjdq}}</div>
             </div>
           </el-col>
-          <el-col :span="4" class="grid-header">
+          <el-col :span="5" class="grid-header">
             <div class="grid-header-click">
-              <div class="bg-purple grid-header-top">今日出国</div>
+              <div class="bg-purple grid-header-top">待评价</div>
               <div class="bg-purple grid-header-center">{{infor.go}}</div>
-              <!-- <div class="bg-purple grid-header-bottom">同比1%</div> -->
             </div>
           </el-col>
-          <el-col :span="4" class="grid-header">
+          <!-- <el-col :span="4" class="grid-header">
             <div class="grid-header-click" >
-              <div class="bg-purple grid-header-top">今日回国</div>
+              <div class="bg-purple grid-header-top">待</div>
               <div class="bg-purple grid-header-center">{{infor.back}}</div>
-              <!-- <div class="bg-purple grid-header-bottom">同比1%</div> -->
             </div>
-          </el-col>
+          </el-col> -->
         </el-row>
       </el-col>
     </el-row>
