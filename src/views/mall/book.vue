@@ -48,7 +48,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="mini" :loading="btntitle === '导出' " @click="onDownload">导出</el-button>
-        </el-form-item> -->
+        </el-form-item>-->
       </el-form>
     </template>
     <el-table
@@ -119,7 +119,6 @@
         align="left"
         header-align="center"
       ></el-table-column>
-      
 
       <!-- <el-table-column label="操作" header-align="center" align="center" width="145" fixed="right">
         <template slot-scope="scope">
@@ -203,9 +202,8 @@ import {
   booklist,
   bookdelete,
   bookupdate,
-  booksave,
+  booksave
 } from "../../api/mall/book.js";
-
 
 export default {
   mixins: [serversort, types, table, query, importer, check],
@@ -243,9 +241,11 @@ export default {
           ],
           price: [
             { required: true, message: "价格不能为空", trigger: "blur" },
-            { pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
+            {
+              pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
               message: "价格格式有误",
-              trigger: "blur" }
+              trigger: "blur"
+            }
           ],
           kcsl: [
             { required: true, message: "库存不能为空", trigger: "blur" },
@@ -258,7 +258,7 @@ export default {
           fpj: [
             { required: true, message: "评价不能为空", trigger: "blur" },
             { type: "string", message: "评价必须为字符串", trigger: "blur" }
-          ],
+          ]
         },
         errors: {},
         fields: {
@@ -267,7 +267,7 @@ export default {
           price: "",
           kcsl: "",
           express: 6,
-          fpj: "",
+          fpj: ""
         }
       }
     };
@@ -396,7 +396,7 @@ export default {
             type: "info"
           });
         });
-    }, 
+    },
     operate: function(type, data) {
       this.form.visible = true;
       if (type === "edit") {
@@ -478,7 +478,7 @@ export default {
         price: "",
         kcsl: "",
         express: 6,
-        fpj: "",
+        fpj: ""
       };
     },
     // 编辑数据
@@ -499,7 +499,7 @@ export default {
     // 表格数据行点击
     onRowClick(row, col, event) {
       this.selrow = row;
-    },
+    }
     // onDownload() {
     //   const url = fileAction("book", "download");
     //   this.btntitle = "导出";

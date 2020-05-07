@@ -13,19 +13,15 @@ export default {
      * @param {Object} payload password {String} 密码
      * @param {Object} payload route {Object} 登录成功后定向的路由对象 任何 vue-router 支持的格式
      */
-    login ({ dispatch }, {
-      username = '',
-      password = '',
-      usertype = '0'
-    } = {}) {
+    login({ dispatch }, { username = '', password = '', usertype = '0' } = {}) {
       return new Promise((resolve, reject) => {
         // 开始请求登录接口
         AccountLogin({
           username,
           password,
-          usertype
+          usertype,
         })
-          .then(async res => {
+          .then(async (res) => {
             // 设置 cookie 一定要存 uuid 和 token 两个 cookie
             // 整个系统依赖这两个数据进行校验和存储
             // uuid 是用户身份唯一标识 用户注册的时候确定 并且不可改变 不可重复
@@ -34,15 +30,19 @@ export default {
             util.cookies.set('uuid', res.username)
             util.cookies.set('token', res.access_token)
             // 设置 vuex 用户信息
-            await dispatch('d2admin/user/set', {
-              name: res.name
-            }, { root: true })
+            await dispatch(
+              'd2admin/user/set',
+              {
+                ...res.user,
+              },
+              { root: true }
+            )
             // 用户登录后从持久化数据加载一系列的设置
             await dispatch('load')
             // 结束
             resolve()
           })
-          .catch(err => {
+          .catch((err) => {
             console.log('err: ', err)
             reject(err)
           })
@@ -53,11 +53,11 @@ export default {
      * @param {Object} context
      * @param {Object} payload confirm {Boolean} 是否需要确认
      */
-    logout ({ commit, dispatch }, { confirm = false } = {}) {
+    logout({ commit, dispatch }, { confirm = false } = {}) {
       /**
        * @description 注销
        */
-      async function logout () {
+      async function logout() {
         // 删除cookie
         util.cookies.remove('token')
         util.cookies.remove('uuid')
@@ -65,14 +65,14 @@ export default {
         await dispatch('d2admin/user/set', {}, { root: true })
         // 跳转路由
         router.push({
-          name: 'login'
+          name: 'login',
         })
       }
       // 判断是否需要确认
       if (confirm) {
         commit('d2admin/gray/set', true, { root: true })
         MessageBox.confirm('确定要注销当前用户吗', '注销用户', {
-          type: 'warning'
+          type: 'warning',
         })
           .then(() => {
             commit('d2admin/gray/set', false, { root: true })
@@ -81,7 +81,7 @@ export default {
           .catch(() => {
             commit('d2admin/gray/set', false, { root: true })
             Message({
-              message: '取消注销操作'
+              message: '取消注销操作',
             })
           })
       } else {
@@ -92,8 +92,8 @@ export default {
      * @description 用户登录后从持久化数据加载一系列的设置
      * @param {Object} context
      */
-    load ({ dispatch }) {
-      return new Promise(async resolve => {
+    load({ dispatch }) {
+      return new Promise(async (resolve) => {
         // DB -> store 加载用户名
         await dispatch('d2admin/user/load', null, { root: true })
         // DB -> store 加载主题
@@ -111,6 +111,6 @@ export default {
         // end
         resolve()
       })
-    }
-  }
+    },
+  },
 }
