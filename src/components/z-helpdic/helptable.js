@@ -28,5 +28,14 @@ export const Helptable = {
       {width: '90px', prop: 'sex', label: '性别'}
     ],
     params: {}
+  },
+  'address':{
+    action: 'addresslist',
+    cols:[
+      {width: '90px', prop: 'fsjrxm', label: '姓名'},
+      {width: '90px', prop: 'fsjrdh', label: '电话'},
+      {width: '140px', prop: 'address', label: '地址'},
+    ],
+    params: {}
   }
 }

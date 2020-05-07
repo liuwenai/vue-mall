@@ -115,8 +115,8 @@
         <el-form-item prop="fsjrxm" label="收件人姓名" :error="form.errors.fsjrxm">
           <el-input v-model="form.fields.fsjrxm" placeholder="收件人姓名"></el-input>
         </el-form-item>
-        <el-form-item prop="fsjrdh" label="收件人姓名" :error="form.errors.fsjrdh">
-          <el-input v-model="form.fields.fsjrdh" placeholder="收件人姓名"></el-input>
+        <el-form-item prop="fsjrdh" label="收件人电话" :error="form.errors.fsjrdh">
+          <el-input v-model="form.fields.fsjrdh" placeholder="收件人电话"></el-input>
         </el-form-item>
         <el-form-item prop="address" label="地址" :error="form.errors.address">
           <el-input v-model="form.fields.address" placeholder="地址"></el-input>
@@ -183,9 +183,9 @@ export default {
             { required: true, message: "收件人姓名不能为空", trigger: "blur" },
             { type: "string", message: "收件人姓名必须为字符串", trigger: "blur" }
           ],
-          fsjrdz: [
-            { required: true, message: "收件人地址不能为空", trigger: "blur" },
-            { type: "string", message: "收件人地址必须为字符串", trigger: "blur" }
+          fsjrdh: [
+            { required: true, message: "收件人电话不能为空", trigger: "blur" },
+            { type: "string", message: "收件人电话必须为字符串", trigger: "blur" }
           ],
           address: [
             { required: true, message: "地址不能为空", trigger: "blur" },
@@ -248,7 +248,7 @@ export default {
             this.showLoading = false;
             return;
           }
-          this.rows = response.addresses;
+          this.rows = response.rows;
           this.total = response.total;
           this.max = response.max;
           this.showLoading = false;

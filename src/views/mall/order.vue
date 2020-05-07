@@ -6,7 +6,7 @@
           <el-form-item v-for="(item,index) in query.cols" :key="index">
             <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
               <el-select v-model="item.col" slot="prepend" placeholder="请选择" style="width:110px;">
-                <el-option label="订单人姓名" value="fddname"></el-option>
+                <el-option label="收件人姓名" value="fddname"></el-option>
                 <el-option label="订单编号" value="fddbh"></el-option>
                 <el-option label="订单地址" value="fdddz"></el-option>
                 <el-option label="订单时间" value="fddsj"></el-option>
@@ -70,8 +70,8 @@
       <el-table-column
         min-width="130px"
         sortable="custom"
-        prop="fddname"
-        label="订单人姓名"
+        prop="address.fname"
+        label="收件人姓名"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -80,7 +80,7 @@
         min-width="110px"
         sortable="custom"
         prop="fdddh"
-        label="订单电话"
+        label="收件人电话"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -89,7 +89,7 @@
         min-width="130px"
         sortable="custom"
         prop="fdddz"
-        label="订单地址"
+        label="收件人地址"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -183,14 +183,18 @@
         <!-- <el-form-item prop="fdwbh" label="单位编号" :error="form.errors.fdwbh">
           <el-input v-model="form.fields.fdwbh" placeholder="单位编号"></el-input>
         </el-form-item>-->
-        <el-form-item prop="fddname" label="订单人姓名" :error="form.errors.fddname">
-          <el-input v-model="form.fields.fddname" placeholder="订单人姓名"></el-input>
+        <el-form-item prop="address.fname" label="收件人姓名" :error="form.errors.address">
+          <el-input v-model="form.fields.address.fname" placeholder="订单人姓名">
+            <el-button slot="append" @click="onOpenDialog('address')"
+              >地址列表</el-button
+            >
+          </el-input>
         </el-form-item>
-        <el-form-item prop="fdddh" label="订单电话" :error="form.errors.fdddh">
-          <el-input v-model="form.fields.fdddh" placeholder="订单电话"></el-input>
+        <el-form-item prop="fdddh" label="收件人电话" :error="form.errors.fdddh">
+          <el-input v-model="form.fields.fdddh" readonly placeholder="订单电话"></el-input>
         </el-form-item>
-        <el-form-item prop="fdddz" label="订单地址" :error="form.errors.fdddz">
-          <el-input v-model="form.fields.fdddz" placeholder="订单地址"></el-input>
+        <el-form-item prop="fdddz" label="收件人地址" :error="form.errors.fdddz">
+          <el-input v-model="form.fields.fdddz" readonly placeholder="订单地址"></el-input>
         </el-form-item>
         <el-form-item prop="fddbh" label="订单编号" :error="form.errors.fddbh">
           <el-input v-model="form.fields.fddbh" placeholder="订单编号"></el-input>
@@ -224,6 +228,17 @@
         >提交</el-button>
       </div>
     </el-dialog>
+
+    <help-table-dic
+      :params="addressparams"
+      title="作者列表"
+      height="400"
+      seltype="S"
+      dicname="address"
+      :dialog-show="addressvisible"
+      @helpdata="selectAddress"
+      @close="onCloseDialog('address')"
+    />
   </d2-container>
 </template>
 
@@ -248,6 +263,8 @@ export default {
   mixins: [serversort, types, table, query, importer, check],
   data() {
     return {
+      addressvisible: false,
+      addressparams: {},
       downloadparams: {},
       btntitle: "",
       title: "",
@@ -270,17 +287,17 @@ export default {
         visible: false,
         edit: false,
         rules: {
-          fddname: [
-            { required: true, message: "订单人姓名不能为空", trigger: "blur" },
-            { type: "string", message: "订单人姓名必须为字符串", trigger: "blur" }
+          'address.fname': [
+            { required: true, message: "收件人姓名不能为空", trigger: "blur" },
+            { type: "string", message: "收件人姓名必须为字符串", trigger: "blur" }
           ],
           fdddh: [
-            { required: true, message: "订单电话不能为空", trigger: "blur" },
-            { type: "string", message: "订单电话必须为字符串", trigger: "blur" }
+            { required: true, message: "收件人电话不能为空", trigger: "blur" },
+            { type: "string", message: "收件人电话必须为字符串", trigger: "blur" }
           ],
           fdddz: [
-            { required: true, message: "订单地址不能为空", trigger: "blur" },
-            { type: "string", message: "订单地址必须为字符串", trigger: "blur" }
+            { required: true, message: "收件人地址不能为空", trigger: "blur" },
+            { type: "string", message: "收件人地址必须为字符串", trigger: "blur" }
           ],
           fddbh: [
             { required: true, message: "订单编号不能为空", trigger: "blur" },
@@ -309,7 +326,7 @@ export default {
         },
         errors: {},
         fields: {
-          fddname: "",
+          address: {fname:""},
           fdddh: "",
           fdddz: "",
           fddbh: "",
@@ -370,7 +387,7 @@ export default {
             this.showLoading = false;
             return;
           }
-          this.rows = response.morders;
+          this.rows = response.rows;
           this.total = response.total;
           this.max = response.max;
           this.showLoading = false;
@@ -524,7 +541,7 @@ export default {
     },
     reset: function() {
       this.form.fields = {
-          fddname: "",
+          address: {fname:""},
           fdddh: "",
           fdddz: "",
           fddbh: "",
@@ -592,6 +609,23 @@ export default {
     //   this.load();
     //   this.btntitle = "";
     // }
+    onOpenDialog(type = 'address') {
+      this[`${type}visible`] = true
+    },
+    selectAddress(row, show) {
+      this.addressvisible = show
+      if (row) {
+        this.form.fields.address = {
+          id: row.id,
+          fname: row.fsjrxm,
+        }
+        this.form.fields.fdddh = row.fsjrdh
+        this.form.fields.fdddz = row.address
+      }
+    },
+    onCloseDialog(type = 'address') {
+      this[`${type}visible`] = false
+    },
   }
 };
 </script>
