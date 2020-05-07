@@ -504,7 +504,7 @@ export default {
     // 表格数据行点击
     onRowClick(row, col, event) {
       this.selrow = row;
-    }
+    },
     // onDownload() {
     //   const url = fileAction("book", "download");
     //   this.btntitle = "导出";
