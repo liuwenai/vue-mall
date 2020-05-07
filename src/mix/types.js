@@ -9,7 +9,9 @@ export default {
     return {
       valueFormat: 'yyyyMMdd', // 后台保存日期格式
       showFormat: 'yyyy-MM-dd', // 前台显示日期格式
-      fshowMap
+      fshowMap,
+      fxsfMap,
+      booleanMap
     }
   },
 
@@ -19,7 +21,7 @@ export default {
     },
 
     booleanFormatter (row, col, val) {
-      return get(booleanMap, val, val)
+      return get(booleanMap, row[col.property], row[col.property])
     },
 
     setLoading () {

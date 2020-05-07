@@ -8,7 +8,7 @@ export const authorlist = () => {
 };
 
 export const authorupdate = params => {
-    return axios.put(`${prefix}author/update`, params)
+    return axios.post(`${prefix}author/update`, params)
 }
 
 
@@ -17,6 +17,6 @@ export const authordelete = params => {
 }
 
 export const authorsave = params => {
-    return axios.get(`${prefix}author/save/`, params)
+    return axios.post(`${prefix}author/save`, params)
 }
 

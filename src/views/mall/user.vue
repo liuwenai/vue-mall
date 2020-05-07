@@ -138,10 +138,11 @@
               <el-table-column
                 min-width="140px"
                 sortable="custom"
-                prop="isAdmin"
+                prop="admin"
                 label="管理员"
                 show-overflow-tooltip
-                align="left"
+                align="center"
+                :formatter="booleanFormatter"
                 header-align="center"
               ></el-table-column>
             </el-table>
@@ -382,12 +383,12 @@
           ></el-input>
         </el-form-item>
         <el-form-item
-          prop="isAdmin"
+          prop="admin"
           label="管理员"
-          :error="form.errors.isAdmin"
+          :error="form.errors.admin"
         >
           <el-input
-            v-model="form.fields.isAdmin"
+            v-model="form.fields.admin"
             disabled
             placeholder="管理员"
           ></el-input>
@@ -482,7 +483,7 @@ export default {
           usermc: '',
           phone: '',
           password: '',
-          isAdmin: false,
+          admin: false,
         },
       },
     }
@@ -709,7 +710,7 @@ export default {
         usermc: '',
         phone: '',
         password: '',
-        isAdmin: false,
+        admin: false,
       }
     },
     // 编辑数据

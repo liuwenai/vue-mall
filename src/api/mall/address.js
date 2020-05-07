@@ -8,7 +8,7 @@ export const addresslist = () => {
 };
 
 export const addressupdate = params => {
-    return axios.put(`${prefix}address/update`, params)
+    return axios.post(`${prefix}address/update`, params)
 }
 
 
@@ -17,6 +17,6 @@ export const addressdelete = params => {
 }
 
 export const addresssave = params => {
-    return axios.get(`${prefix}address/save/`, params)
+    return axios.post(`${prefix}address/save`, params)
 }
 
