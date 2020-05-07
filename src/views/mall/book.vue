@@ -48,7 +48,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="mini" :loading="btntitle === '导出' " @click="onDownload">导出</el-button>
-        </el-form-item> -->
+        </el-form-item>-->
       </el-form>
     </template>
     <el-table
@@ -119,7 +119,6 @@
         align="left"
         header-align="center"
       ></el-table-column>
-      
 
       <!-- <el-table-column label="操作" header-align="center" align="center" width="145" fixed="right">
         <template slot-scope="scope">
@@ -215,9 +214,8 @@ import {
   booklist,
   bookdelete,
   bookupdate,
-  booksave,
+  booksave
 } from "../../api/mall/book.js";
-
 
 export default {
   mixins: [serversort, types, table, query, importer, check],
@@ -274,7 +272,7 @@ export default {
           price: "",
           kcsl: "",
           express: 6,
-          fpj: "",
+          fpj: ""
         }
       }
     };
@@ -403,7 +401,7 @@ export default {
             type: "info"
           });
         });
-    }, 
+    },
     operate: function(type, data) {
       this.form.visible = true;
       if (type === "edit") {
@@ -485,7 +483,7 @@ export default {
         price: "",
         kcsl: "",
         express: 6,
-        fpj: "",
+        fpj: ""
       };
     },
     // 编辑数据
