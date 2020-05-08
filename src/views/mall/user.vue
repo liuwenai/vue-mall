@@ -195,7 +195,7 @@
                   <el-table-column
                     min-width="130px"
                     sortable="custom"
-                    prop="fsjrxm"
+                    prop="name"
                     label="收件人姓名"
                     show-overflow-tooltip
                     align="center"
@@ -204,7 +204,7 @@
                   <el-table-column
                     min-width="110px"
                     sortable="custom"
-                    prop="fsjrdh"
+                    prop="tel"
                     label="收件人电话"
                     show-overflow-tooltip
                     align="center"
@@ -219,6 +219,16 @@
                     align="center"
                     header-align="center"
                   ></el-table-column>
+                  <el-table-column
+                    min-width="90px"
+                    sortable="custom"
+                    prop="default"
+                    label="默认地址"
+                    :formatter="booleanFormatter"
+                    show-overflow-tooltip
+                    align="center"
+                    header-align="center"
+                   ></el-table-column>
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="订单管理" name="taborder">

@@ -32,8 +32,8 @@ export const Helptable = {
   'address':{
     action: 'addresslist',
     cols:[
-      {width: '90px', prop: 'fsjrxm', label: '姓名'},
-      {width: '90px', prop: 'fsjrdh', label: '电话'},
+      {width: '90px', prop: 'name', label: '姓名'},
+      {width: '90px', prop: 'tel', label: '电话'},
       {width: '140px', prop: 'address', label: '地址'},
     ],
     params: {}

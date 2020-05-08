@@ -773,9 +773,9 @@ export default {
       if (row) {
         this.form.fields.address = {
           id: row.id,
-          fname: row.fsjrxm,
+          fname: row.name,
         }
-        this.form.fields.fdddh = row.fsjrdh
+        this.form.fields.fdddh = row.tel
         this.form.fields.fdddz = row.address
       }
     },

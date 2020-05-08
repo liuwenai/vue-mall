@@ -6,8 +6,8 @@
           <el-form-item v-for="(item,index) in query.cols" :key="index">
             <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
               <el-select v-model="item.col" slot="prepend" placeholder="请选择" style="width:110px;">
-                <el-option label="收件人姓名" value="fsjrxm"></el-option>
-                <el-option label="收件人电话" value="fsjrdh"></el-option>
+                <el-option label="收件人姓名" value="name"></el-option>
+                <el-option label="收件人电话" value="tel"></el-option>
                 <el-option label="地址" value="address"></el-option>
               </el-select>
               <el-select v-model="item.type" slot="append" placeholder="请选择" style="width:70px;">
@@ -74,7 +74,7 @@
       <el-table-column
         min-width="130px"
         sortable="custom"
-        prop="fsjrxm"
+        prop="name"
         label="收件人姓名"
         show-overflow-tooltip
         align="center"
@@ -83,7 +83,7 @@
       <el-table-column
         min-width="110px"
         sortable="custom"
-        prop="fsjrdh"
+        prop="tel"
         label="收件人电话"
         show-overflow-tooltip
         align="center"
@@ -94,6 +94,16 @@
         sortable="custom"
         prop="address"
         label="地址"
+        show-overflow-tooltip
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="90px"
+        sortable="custom"
+        prop="default"
+        label="默认地址"
+        :formatter="booleanFormatter"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -128,15 +138,17 @@
             >
           </el-input>
         </el-form-item>
-        <el-form-item prop="fsjrxm" label="收件人姓名" :error="form.errors.fsjrxm">
-          <el-input v-model="form.fields.fsjrxm" placeholder="收件人姓名"></el-input>
+        <el-form-item prop="name" label="收件人姓名" :error="form.errors.name">
+          <el-input v-model="form.fields.name" placeholder="收件人姓名"></el-input>
         </el-form-item>
-        <el-form-item prop="fsjrdh" label="收件人电话" :error="form.errors.fsjrdh">
-          <el-input v-model="form.fields.fsjrdh" placeholder="收件人电话"></el-input>
+        <el-form-item prop="tel" label="收件人电话" :error="form.errors.tel">
+          <el-input v-model="form.fields.tel" placeholder="收件人电话"></el-input>
         </el-form-item>
         <el-form-item prop="address" label="地址" :error="form.errors.address">
           <el-input v-model="form.fields.address" placeholder="地址"></el-input>
         </el-form-item>
+        <el-form-item prop="default" label="默认地址" :error="form.errors.default">
+          <el-input v-model="form.fields.default" placeholder="默认地址"></el-input>          
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -211,11 +223,11 @@ export default {
             { required: true, message: '用户不能为空', trigger: 'blur' },
             { type: 'string', message: '用户必须为字符串', trigger: 'blur' },
           ],
-          fsjrxm: [
+          name: [
             { required: true, message: "收件人姓名不能为空", trigger: "blur" },
             { type: "string", message: "收件人姓名必须为字符串", trigger: "blur" }
           ],
-          fsjrdh: [
+          tel: [
             { required: true, message: "收件人电话不能为空", trigger: "blur" },
             { type: "string", message: "收件人电话必须为字符串", trigger: "blur" }
           ],
@@ -223,13 +235,18 @@ export default {
             { required: true, message: "地址不能为空", trigger: "blur" },
             { type: "string", message: "地址必须为字符串", trigger: "blur" }
           ],
+          default: [
+            { required: true, message: "默认地址不能为空", trigger: "blur" },
+            { type: "string", message: "默认地址必须为字符串", trigger: "blur" }
+          ],
         },
         errors: {},
         fields: {
           user:{ usermc:""},
-          fsjrxm: "",
-          fsjrdh: "",
+          name: "",
+          tel: "",
           address: "",
+          default:""
         }
       }
     };
@@ -436,9 +453,10 @@ export default {
     reset: function() {
       this.form.fields = {
           user:{ usermc:""},
-          fsjrxm: "",
-          fsjrdh: "",
+          name: "",
+          tel: "",
           address: "",
+          default:""
       };
     },
     // 编辑数据
