@@ -6,7 +6,7 @@ export const booklist = () => {
 }
 
 export const bookupdate = (params) => {
-  return axios.put(`${prefix}book/update`, params)
+  return axios.post(`${prefix}book/update`, params)
 }
 
 export const bookdelete = (params) => {

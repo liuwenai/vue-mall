@@ -6,7 +6,7 @@ export const authorlist = () => {
 }
 
 export const authorupdate = (params) => {
-  return axios.put(`${prefix}author/update`, params)
+  return axios.post(`${prefix}author/update`, params)
 }
 
 export const authordelete = (params) => {

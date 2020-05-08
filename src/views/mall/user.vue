@@ -93,12 +93,12 @@
               @row-click="onRowClick"
               stripe
             >
-              <el-table-column
+              <!-- <el-table-column
                 type="selection"
                 header-align="center"
                 align="center"
-              ></el-table-column>
-              <!-- <el-table-column type="index" label="序号" width="80" align="center"></el-table-column> -->
+              ></el-table-column> -->
+              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
               <el-table-column
                 min-width="130px"
                 sortable="custom"
@@ -234,11 +234,11 @@
                   @selection-change="selsChange"
                   @sort-change="onSortChange"
                 >
-                  <el-table-column
+                  <!-- <el-table-column
                     type="selection"
                     header-align="center"
                     align="center"
-                  ></el-table-column>
+                  ></el-table-column> -->
                   <el-table-column
                     type="index"
                     label="序号"
@@ -732,45 +732,11 @@ export default {
     onRowClick(row, col, event) {
       this.selrow = row
       this.loadAddre();
-      this.loadOrder();
+      // this.loadOrder();
     },
-    // onDownload() {
-    //   const url = fileAction("user", "download");
-    //   this.btntitle = "导出";
-    //   fileExport(url, this.downloadparams)
-    //     .then(response => {
-    //       // debugger
-    //       const { code, msg, url } = response;
-    //       if (code === 100) {
-    //         window.open(url);
-    //       } else {
-    //         this.$notify({
-    //           type: "error",
-    //           message: msg,
-    //           duration: 0
-    //         });
-    //       }
-    //       // const blob = new Blob([response]);
-    //       // const aEle = document.createElement("a"); // 创建a标签
-    //       // const href = window.URL.createObjectURL(blob); // 创建下载的链接
-    //       // aEle.href = href;
-    //       // aEle.download = "资金到位.xlsx"; // 下载后文件名
-    //       // document.body.appendChild(aEle);
-    //       // aEle.click(); // 点击下载
-    //       // document.body.removeChild(aEle); // 下载完成移除元素
-    //       // window.URL.revokeObjectURL(href); // 释放掉blob对象
-    //     })
-    //     .finally(() => {
-    //       this.btntitle = "";
-    //     });
-    // },
-    // doBefore() {
-    //   this.btntitle = "导入";
-    // },
-    // doLast() {
-    //   this.load();
-    //   this.btntitle = "";
-    // }
+    loadAddre(){
+      this.addresslist = this.selrow.addresses
+    }
   },
 }
 </script>

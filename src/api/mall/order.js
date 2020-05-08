@@ -8,7 +8,7 @@ export const morderlist = () => {
 };
 
 export const morderupdate = params => {
-    return axios.put(`${prefix}morder/update`, params)
+    return axios.post(`${prefix}morder/update`, params)
 }
 
 

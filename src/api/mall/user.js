@@ -7,12 +7,12 @@ export const userlist = () => {
     return axios.get(`${prefix}user/index`);
 };
 
-export const usershow = () => {
+export const usershow = params => {
     return axios.get(`${prefix}user/show/${params.id}`);
 };
 
 export const userupdate = params => {
-    return axios.put(`${prefix}user/update`, params)
+    return axios.post(`${prefix}user/update`, params)
 }
 
 
@@ -21,6 +21,6 @@ export const userdelete = params => {
 }
 
 export const usersave = params => {
-    return axios.get(`${prefix}user/save/`, params)
+    return axios.post(`${prefix}user/save`, params)
 }
 
