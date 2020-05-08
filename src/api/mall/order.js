@@ -17,6 +17,6 @@ export const morderdelete = params => {
 }
 
 export const mordersave = params => {
-    return axios.get(`${prefix}morder/save/`, params)
+    return axios.post(`${prefix}morder/save`, params)
 }
 

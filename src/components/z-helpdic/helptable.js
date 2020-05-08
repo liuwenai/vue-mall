@@ -37,5 +37,13 @@ export const Helptable = {
       {width: '140px', prop: 'address', label: '地址'},
     ],
     params: {}
+  },
+  'user':{
+    action: 'userlist',
+    cols:[
+      {width: '90px', prop: 'userzh', label: '账号'},
+      {width: '90px', prop: 'usermc', label: '名称'},
+    ],
+    params: {}
   }
 }

@@ -65,6 +65,15 @@
       <el-table-column
         min-width="130px"
         sortable="custom"
+        prop="user.usermc"
+        label="用户"
+        show-overflow-tooltip
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="130px"
+        sortable="custom"
         prop="fsjrxm"
         label="收件人姓名"
         show-overflow-tooltip
@@ -112,6 +121,13 @@
       @close="closeDialog('form')"
     >
       <el-form :model="form.fields" label-width="100px" :rules="form.rules" ref="form">
+        <el-form-item prop="user.usermc" label="用户" :error="form.errors.user">
+          <el-input v-model="form.fields.user.usermc" placeholder="用户">
+            <el-button slot="append" @click="onOpenDialog('user')"
+              >用户列表</el-button
+            >
+          </el-input>
+        </el-form-item>
         <el-form-item prop="fsjrxm" label="收件人姓名" :error="form.errors.fsjrxm">
           <el-input v-model="form.fields.fsjrxm" placeholder="收件人姓名"></el-input>
         </el-form-item>
@@ -133,6 +149,16 @@
         >提交</el-button>
       </div>
     </el-dialog>
+    <help-table-dic
+      :params="userparams"
+      title="作者列表"
+      height="400"
+      seltype="S"
+      dicname="user"
+      :dialog-show="uservisible"
+      @helpdata="selectUser"
+      @close="onCloseDialog('user')"
+    />
   </d2-container>
 </template>
 
@@ -157,6 +183,8 @@ export default {
   mixins: [serversort, types, table, query, importer, check],
   data() {
     return {
+      uservisible: false,
+      userparams: {},
       downloadparams: {},
       btntitle: "",
       title: "",
@@ -179,6 +207,10 @@ export default {
         visible: false,
         edit: false,
         rules: {
+          'user.usermc': [
+            { required: true, message: '用户不能为空', trigger: 'blur' },
+            { type: 'string', message: '用户必须为字符串', trigger: 'blur' },
+          ],
           fsjrxm: [
             { required: true, message: "收件人姓名不能为空", trigger: "blur" },
             { type: "string", message: "收件人姓名必须为字符串", trigger: "blur" }
@@ -194,6 +226,7 @@ export default {
         },
         errors: {},
         fields: {
+          user:{ usermc:""},
           fsjrxm: "",
           fsjrdh: "",
           address: "",
@@ -402,6 +435,7 @@ export default {
     },
     reset: function() {
       this.form.fields = {
+          user:{ usermc:""},
           fsjrxm: "",
           fsjrdh: "",
           address: "",
@@ -463,7 +497,23 @@ export default {
     //   this.load();
     //   this.btntitle = "";
     // }
-  }
+    onOpenDialog(type = 'user') {
+      this[`${type}visible`] = true
+    },
+    selectUser(row, show) {
+      this.uservisible = show
+      if (row) {
+        this.form.fields.user = {
+          id: row.id,
+          usermc: row.usermc,
+        }
+      }
+    },
+    onCloseDialog(type = 'user') {
+      this[`${type}visible`] = false
+    },
+  },
+  
 };
 </script>
 
