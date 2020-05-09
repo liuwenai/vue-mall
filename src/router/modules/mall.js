@@ -22,6 +22,15 @@ export default [
         }
       },
       {
+        path: '/cart',
+        name: 'cart',
+        component: () => import('@/views/mall/cart'),
+        meta: {
+          // cache: true,
+          title: '购物车'
+        }
+      },
+      {
         path: '/author',
         name: 'author',
         component: () => import('@/views/mall/author'),
