@@ -199,7 +199,7 @@
     </el-dialog>
     <help-table-dic
       :params="userparams"
-      title="作者列表"
+      title="用户列表"
       height="400"
       seltype="S"
       dicname="user"

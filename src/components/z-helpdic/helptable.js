@@ -29,12 +29,20 @@ export const Helptable = {
     ],
     params: {}
   },
+  'book':{
+    action: 'booklist',
+    cols:[
+      {width: '90px', prop: 'id', label: '书籍ID'},
+      {width: '90px', prop: 'title', label: '书名'}
+    ],
+    params: {}
+  },
   'address':{
     action: 'addresslist',
     cols:[
       {width: '90px', prop: 'name', label: '姓名'},
       {width: '90px', prop: 'tel', label: '电话'},
-      {width: '140px', prop: 'address', label: '地址'},
+      {width: '140px', prop: 'county', label: '地址'},
     ],
     params: {}
   },

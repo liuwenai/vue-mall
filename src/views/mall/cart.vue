@@ -3,7 +3,7 @@
     <template slot="header">
       <el-form class="topHorizontal" :inline="true" :model="query" ref="header">
         <div>
-          <el-form-item v-for="(item,index) in query.cols" :key="index">
+          <el-form-item v-for="(item, index) in query.cols" :key="index">
             <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
               <el-select v-model="item.col" slot="prepend" placeholder="请选择" style="width:110px;">
                 <el-option label="收件人姓名" value="name"></el-option>
@@ -18,7 +18,7 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item v-for="(item,index) in query.cols.length - 1" :key="index">
+          <el-form-item v-for="(item, index) in query.cols.length - 1" :key="index">
             <el-button type="primary" size="mini" @click="removeQuery(index)">删除</el-button>
           </el-form-item>
           <el-form-item>
@@ -45,7 +45,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="mini" :loading="btntitle === '导出' " @click="onDownload">导出</el-button>
-        </el-form-item> -->
+        </el-form-item>-->
       </el-form>
     </template>
     <el-table
@@ -84,7 +84,7 @@
         min-width="110px"
         sortable="custom"
         prop="number"
-        label="件数"
+        label="商品数量"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -95,7 +95,7 @@
         <el-pagination
           @size-change="handlePage"
           @current-change="handleCurPage"
-          :page-sizes="[20,50,100]"
+          :page-sizes="[20, 50, 100]"
           :page-size="max"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
@@ -114,13 +114,13 @@
       <el-form :model="form.fields" label-width="100px" :rules="form.rules" ref="form">
         <el-form-item prop="user.usermc" label="用户" :error="form.errors.user">
           <el-input v-model="form.fields.user.usermc" placeholder="用户">
-            <el-button slot="append" @click="onOpenDialog('user')"
-              >用户列表</el-button
-            >
+            <el-button slot="append" @click="onOpenDialog('user')">用户列表</el-button>
           </el-input>
         </el-form-item>
         <el-form-item prop="goodsId" label="商品ID" :error="form.errors.goodsId">
-          <el-input v-model="form.fields.goodsId" placeholder="商品ID"></el-input>
+          <el-input v-model="form.fields.goodsId" placeholder="商品ID">
+            <el-button slot="append" @click="onOpenDialog('book')">书籍列表</el-button>
+          </el-input>
         </el-form-item>
         <el-form-item prop="number" label="商品数量" :error="form.errors.number">
           <el-input v-model="form.fields.number" placeholder="商品数量"></el-input>
@@ -138,13 +138,23 @@
     </el-dialog>
     <help-table-dic
       :params="userparams"
-      title="作者列表"
+      title="用户列表"
       height="400"
       seltype="S"
       dicname="user"
       :dialog-show="uservisible"
       @helpdata="selectUser"
       @close="onCloseDialog('user')"
+    />
+    <help-table-dic
+      :params="bookparams"
+      title="书籍列表"
+      height="400"
+      seltype="S"
+      dicname="book"
+      :dialog-show="bookvisible"
+      @helpdata="selectBook"
+      @close="onCloseDialog('book')"
     />
   </d2-container>
 </template>
@@ -162,9 +172,8 @@ import {
   itemorderlist,
   itemorderdelete,
   itemorderupdate,
-  itemordersave,
+  itemordersave
 } from "../../api/mall/cart.js";
-
 
 export default {
   mixins: [serversort, types, table, query, importer, check],
@@ -172,6 +181,8 @@ export default {
     return {
       uservisible: false,
       userparams: {},
+      bookvisible: false,
+      bookparams: {},
       downloadparams: {},
       btntitle: "",
       title: "",
@@ -194,24 +205,28 @@ export default {
         visible: false,
         edit: false,
         rules: {
-          'user.usermc': [
-            { required: true, message: '用户不能为空', trigger: 'blur' },
-            { type: 'string', message: '用户必须为字符串', trigger: 'blur' },
+          "user.usermc": [
+            { required: true, message: "用户不能为空", trigger: "blur" },
+            { type: "string", message: "用户必须为字符串", trigger: "blur" }
           ],
           goodsId: [
             { required: true, message: "商品ID不能为空", trigger: "blur" },
-            { type: "string", message: "商品ID必须为字符串", trigger: "blur" }
+            // { type: "string", message: "商品ID必须为字符串", trigger: "blur" }
           ],
           number: [
             { required: true, message: "商品数量不能为空", trigger: "blur" },
-            { type: "string", message: "商品数量必须为字符串", trigger: "blur" }
+            {
+              type: "string",
+              message: "商品数量必须为字符串",
+              trigger: "blur"
+            }
           ]
         },
         errors: {},
         fields: {
-          user:{ usermc:""},
+          user: { usermc: "" },
           goodsId: "",
-          number: "",
+          number: ""
         }
       }
     };
@@ -340,7 +355,7 @@ export default {
             type: "info"
           });
         });
-    }, 
+    },
     operate: function(type, data) {
       this.form.visible = true;
       if (type === "edit") {
@@ -417,9 +432,9 @@ export default {
     },
     reset: function() {
       this.form.fields = {
-          user:{ usermc:""},
-          goodsId: "",
-          number: "",
+        user: { usermc: "" },
+        goodsId: "",
+        number: ""
       };
     },
     // 编辑数据
@@ -478,27 +493,33 @@ export default {
     //   this.load();
     //   this.btntitle = "";
     // }
-    onOpenDialog(type = 'user') {
-      this[`${type}visible`] = true
+    onOpenDialog(type = "user") {
+      this[`${type}visible`] = true;
     },
     selectUser(row, show) {
-      this.uservisible = show
+      this.uservisible = show;
       if (row) {
         this.form.fields.user = {
           id: row.id,
-          usermc: row.usermc,
-        }
+          usermc: row.usermc
+        };
       }
     },
-    onCloseDialog(type = 'user') {
-      this[`${type}visible`] = false
+    selectBook(row, show) {
+      this.bookvisible = show;
+      if (row) {
+        this.form.fields.goodsId = row.id;
+        debugger;
+      }
     },
-  },
-  
+    onCloseDialog(type = "user") {
+      this[`${type}visible`] = false;
+    }
+  }
 };
 </script>
 
-<style >
+<style>
 @import "~@/assets/style/common.scss";
 /*.el-table .cell, .el-table th>div {*/
 /*padding-left:5px;*/
