@@ -90,10 +90,37 @@
         header-align="center"
       ></el-table-column>
       <el-table-column
-        min-width="90px"
+        min-width="110px"
         sortable="custom"
-        prop="address"
-        label="地址"
+        prop="province"
+        label="省份"
+        show-overflow-tooltip
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="110px"
+        sortable="custom"
+        prop="city"
+        label="城市"
+        show-overflow-tooltip
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="110px"
+        sortable="custom"
+        prop="county"
+        label="区县"
+        show-overflow-tooltip
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="150px"
+        sortable="custom"
+        prop="addressDetail"
+        label="详细地址地址"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -144,8 +171,17 @@
         <el-form-item prop="tel" label="收件人电话" :error="form.errors.tel">
           <el-input v-model="form.fields.tel" placeholder="收件人电话"></el-input>
         </el-form-item>
-        <el-form-item prop="address" label="地址" :error="form.errors.address">
-          <el-input v-model="form.fields.address" placeholder="地址"></el-input>
+        <el-form-item prop="province" label="省份" :error="form.errors.province">
+          <el-input v-model="form.fields.province" placeholder="省份"></el-input>
+        </el-form-item>
+        <el-form-item prop="city" label="城市" :error="form.errors.city">
+          <el-input v-model="form.fields.city" placeholder="城市"></el-input>
+        </el-form-item>
+        <el-form-item prop="county" label="区县" :error="form.errors.county">
+          <el-input v-model="form.fields.county" placeholder="区县"></el-input>
+        </el-form-item>
+        <el-form-item prop="addressDetail" label="详细地址" :error="form.errors.addressDetail">
+          <el-input v-model="form.fields.addressDetail" placeholder="详细地址"></el-input>
         </el-form-item>
         <el-form-item prop="default" label="默认地址" :error="form.errors.default">
           <el-input v-model="form.fields.default" placeholder="默认地址"></el-input>          
@@ -231,9 +267,21 @@ export default {
             { required: true, message: "收件人电话不能为空", trigger: "blur" },
             { type: "string", message: "收件人电话必须为字符串", trigger: "blur" }
           ],
-          address: [
-            { required: true, message: "地址不能为空", trigger: "blur" },
-            { type: "string", message: "地址必须为字符串", trigger: "blur" }
+          province: [
+            { required: true, message: "省份不能为空", trigger: "blur" },
+            { type: "string", message: "省份必须为字符串", trigger: "blur" }
+          ],
+          city: [
+            { required: true, message: "城市不能为空", trigger: "blur" },
+            { type: "string", message: "城市必须为字符串", trigger: "blur" }
+          ],
+          county: [
+            { required: true, message: "区县不能为空", trigger: "blur" },
+            { type: "string", message: "区县必须为字符串", trigger: "blur" }
+          ],
+          addressDetail	: [
+            { required: true, message: "详细地址不能为空", trigger: "blur" },
+            { type: "string", message: "详细地址必须为字符串", trigger: "blur" }
           ],
           default: [
             { required: true, message: "默认地址不能为空", trigger: "blur" },
@@ -245,7 +293,10 @@ export default {
           user:{ usermc:""},
           name: "",
           tel: "",
-          address: "",
+          province: "",
+          city:"",
+          county:'',
+          addressDetail:"",
           default:""
         }
       }
@@ -454,8 +505,11 @@ export default {
       this.form.fields = {
           user:{ usermc:""},
           name: "",
-          tel: "",
-          address: "",
+          tel: "",     
+          province: "",
+          city:"",
+          county:'',
+          addressDetail:"",
           default:""
       };
     },
