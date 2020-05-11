@@ -45,7 +45,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="mini" :loading="btntitle === '导出' " @click="onDownload">导出</el-button>
-        </el-form-item> -->
+        </el-form-item>-->
       </el-form>
     </template>
     <el-table
@@ -160,9 +160,7 @@
       <el-form :model="form.fields" label-width="100px" :rules="form.rules" ref="form">
         <el-form-item prop="user.usermc" label="用户" :error="form.errors.user">
           <el-input v-model="form.fields.user.usermc" placeholder="用户">
-            <el-button slot="append" @click="onOpenDialog('user')"
-              >用户列表</el-button
-            >
+            <el-button slot="append" @click="onOpenDialog('user')">用户列表</el-button>
           </el-input>
         </el-form-item>
         <el-form-item prop="name" label="收件人姓名" :error="form.errors.name">
@@ -184,7 +182,7 @@
           <el-input v-model="form.fields.addressDetail" placeholder="详细地址"></el-input>
         </el-form-item>
         <el-form-item prop="default" label="默认地址" :error="form.errors.default">
-          <el-input v-model="form.fields.default" placeholder="默认地址"></el-input>          
+          <el-input v-model="form.fields.default" placeholder="默认地址"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -223,9 +221,8 @@ import {
   addresslist,
   addressdelete,
   addressupdate,
-  addresssave,
+  addresssave
 } from "../../api/mall/address.js";
-
 
 export default {
   mixins: [serversort, types, table, query, importer, check],
@@ -255,17 +252,25 @@ export default {
         visible: false,
         edit: false,
         rules: {
-          'user.usermc': [
-            { required: true, message: '用户不能为空', trigger: 'blur' },
-            { type: 'string', message: '用户必须为字符串', trigger: 'blur' },
+          "user.usermc": [
+            { required: true, message: "用户不能为空", trigger: "blur" },
+            { type: "string", message: "用户必须为字符串", trigger: "blur" }
           ],
           name: [
             { required: true, message: "收件人姓名不能为空", trigger: "blur" },
-            { type: "string", message: "收件人姓名必须为字符串", trigger: "blur" }
+            {
+              type: "string",
+              message: "收件人姓名必须为字符串",
+              trigger: "blur"
+            }
           ],
           tel: [
             { required: true, message: "收件人电话不能为空", trigger: "blur" },
-            { type: "string", message: "收件人电话必须为字符串", trigger: "blur" }
+            {
+              type: "string",
+              message: "收件人电话必须为字符串",
+              trigger: "blur"
+            }
           ],
           province: [
             { required: true, message: "省份不能为空", trigger: "blur" },
@@ -279,25 +284,25 @@ export default {
             { required: true, message: "区县不能为空", trigger: "blur" },
             { type: "string", message: "区县必须为字符串", trigger: "blur" }
           ],
-          addressDetail	: [
+          addressDetail: [
             { required: true, message: "详细地址不能为空", trigger: "blur" },
             { type: "string", message: "详细地址必须为字符串", trigger: "blur" }
           ],
           default: [
             { required: true, message: "默认地址不能为空", trigger: "blur" },
             { type: "string", message: "默认地址必须为字符串", trigger: "blur" }
-          ],
+          ]
         },
         errors: {},
         fields: {
-          user:{ usermc:""},
+          user: { usermc: "" },
           name: "",
           tel: "",
           province: "",
-          city:"",
-          county:'',
-          addressDetail:"",
-          default:""
+          city: "",
+          county: "",
+          addressDetail: "",
+          default: ""
         }
       }
     };
@@ -426,7 +431,7 @@ export default {
             type: "info"
           });
         });
-    }, 
+    },
     operate: function(type, data) {
       this.form.visible = true;
       if (type === "edit") {
@@ -503,14 +508,14 @@ export default {
     },
     reset: function() {
       this.form.fields = {
-          user:{ usermc:""},
-          name: "",
-          tel: "",     
-          province: "",
-          city:"",
-          county:'',
-          addressDetail:"",
-          default:""
+        user: { usermc: "" },
+        name: "",
+        tel: "",
+        province: "",
+        city: "",
+        county: "",
+        addressDetail: "",
+        default: ""
       };
     },
     // 编辑数据
@@ -569,23 +574,22 @@ export default {
     //   this.load();
     //   this.btntitle = "";
     // }
-    onOpenDialog(type = 'user') {
-      this[`${type}visible`] = true
+    onOpenDialog(type = "user") {
+      this[`${type}visible`] = true;
     },
     selectUser(row, show) {
-      this.uservisible = show
+      this.uservisible = show;
       if (row) {
         this.form.fields.user = {
           id: row.id,
-          usermc: row.usermc,
-        }
+          usermc: row.usermc
+        };
       }
     },
-    onCloseDialog(type = 'user') {
-      this[`${type}visible`] = false
-    },
-  },
-  
+    onCloseDialog(type = "user") {
+      this[`${type}visible`] = false;
+    }
+  }
 };
 </script>
 

@@ -5,6 +5,10 @@ export const addresslist = () => {
   return axios.get(`${prefix}address/index`)
 }
 
+export const addressshow = (params) => {
+  return axios.get(`${prefix}address/show/${params.id}`)
+}
+
 export const addressupdate = (params) => {
   return axios.post(`${prefix}address/update`, params)
 }
