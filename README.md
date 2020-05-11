@@ -1,44 +1,20 @@
-## 框架基础模板
+### 说明
 
-### 使用说明
+#### Build
 
-1、克隆代码
+```javascript
 
-```sh
-
-git clone https://gitlab.com/vue-next/vue-admin-start-kit.git vue-admin-project
-
-```
-
-2、插件安装
-
-``` sh
-
-yarn add -D file://Users/liuyang/workspace/code/vueWorkspace/zysoft/vue-cli-plugin-zysoft
+    git clone https://github.com/liuwenai/vue-mall
+    cd vue-mall
+    yarn install
+    yarn serve
 
 ```
 
-3、执行对应的指令
-
-``` sh
-
-vue invoke vue-cli-plugin-zysoft   
-
-```
-
-4、或者忽略2、3，执行
-
-```sh
-./install.sh
-
-```
-
-###  start-kit 同步
-
-为了便于在新项目中保持同步，可以先 checkout start-kit，作为一个备份的分支，在其他分支上开发，一段 start-kit 有更新了，可以合并到开发分支上
-
-### 后台模板指令
-
-mn create-app com.zysoft.micronaut-project  -l groovy -p zysoft
-
-
++ 用户管理
+  1. 地址管理
+  2. 购物车
++ 订单管理
++ 书籍管理
+  1. 书籍列表
+  2. 作者列表  
