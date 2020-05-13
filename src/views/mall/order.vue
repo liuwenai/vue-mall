@@ -275,6 +275,7 @@ import {
 } from "../../api/mall/order.js";
 import { addressshow } from "../../api/mall/address.js";
 import dayjs from "dayjs";
+import { userlist } from "../../api/mall/user";
 const today = new Date();
 const todayStr = dayjs(today).format("YYYY-MM-DD");
 const timeStr = dayjs(today).format("YYYYMMDDHHmmss");
@@ -315,7 +316,7 @@ export default {
             { required: true, message: "用户不能为空", trigger: "blur" },
             { type: "string", message: "用户必须为字符串", trigger: "blur" }
           ],
-          "address.fname": [
+          name: [
             { required: true, message: "收件人姓名不能为空", trigger: "blur" },
             {
               type: "string",
@@ -323,7 +324,7 @@ export default {
               trigger: "blur"
             }
           ],
-          fdddh: [
+          tel: [
             { required: true, message: "收件人电话不能为空", trigger: "blur" },
             {
               type: "string",
@@ -331,7 +332,7 @@ export default {
               trigger: "blur"
             }
           ],
-          "address.addressDetail": [
+          address: [
             { required: true, message: "收件人地址不能为空", trigger: "blur" }
             // {
             //   type: "string",
@@ -358,7 +359,7 @@ export default {
           fddje: [
             { required: true, message: "订单金额不能为空", trigger: "blur" },
             {
-              type: "string",
+              type: "number",
               message: "订单金额必须为数字",
               trigger: "blur"
             }
@@ -374,7 +375,7 @@ export default {
           fddsl: [
             { required: true, message: "订单数量不能为空", trigger: "blur" },
             {
-              type: "string",
+              type: "number",
               message: "订单数量必须为数字",
               trigger: "blur"
             }
@@ -385,7 +386,7 @@ export default {
           user: { usermc: "" },
           name: "",
           tel: "",
-          addressDetail: "",
+          address: "",
           fdddh: "",
           fddbh: timeStr,
           fddsj: todayStr,
@@ -409,6 +410,7 @@ export default {
   mounted() {
     this.initQuery();
     this.load();
+    // this.address()
     this.$nextTick(() => {
       this.setHeight();
     });
@@ -600,10 +602,9 @@ export default {
     reset: function() {
       this.form.fields = {
         user: { usermc: "" },
-
         name: "",
         tel: "",
-        addressDetail: "",
+        address: "",
         fdddh: "",
         fddbh: timeStr,
         fddsj: todayStr,
@@ -620,7 +621,31 @@ export default {
         this.title = "编辑";
         this.form.fields = _.assign({}, { ...this.selrow });
         this.form.url = morderupdate;
+        this.address(this.selrow);
       }
+    },
+    address(data) {
+      userlist().then(res => {
+        const { rows } = res;
+        rows.forEach(items => {
+          debugger
+          if (data.user.usermc === items.usermc) {
+            // const addresses = item.addresses;
+            const selectAddress = [];
+            items.addresses.forEach((item, index) => {
+              // if (index === 0) {
+              //   this.form.fields.name = item.name;
+              //   this.form.fields.tel = item.tel;
+              //   this.form.fields.id = item.id;
+              //   this.form.fields.address = item.id;
+              // }
+              let sel = { value: item.id, label: item.addressDetail };
+              selectAddress.push(sel);
+            });
+            this.selectAddress = selectAddress;
+          }
+        });
+      });
     },
     // 删除数据
     onDelete() {
@@ -649,7 +674,7 @@ export default {
             this.form.fields.name = item.name;
             this.form.fields.tel = item.tel;
             this.form.fields.id = item.id;
-            this.form.fields.addressDetail = item.id;
+            this.form.fields.address = item.id;
           }
           let sel = { value: item.id, label: item.addressDetail };
           selectAddress.push(sel);
