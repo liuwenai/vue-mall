@@ -1,8 +1,8 @@
 import axios from '@/plugin/axios'
 const prefix = ''
 
-export const itemorderlist = () => {
-  return axios.get(`${prefix}itemorder/index`)
+export const cartlist = () => {
+  return axios.get(`${prefix}cart/all`)
 }
 
 export const itemorderupdate = (params) => {

@@ -248,7 +248,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="订单管理" name="taborder">
+              <el-tab-pane label="购物车" name="taborder">
                 <el-table
                   ref="elxOrder"
                   class="click-table"

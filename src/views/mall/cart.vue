@@ -169,7 +169,7 @@ import importer from "../../mix/importer";
 import check from "../../mix/check";
 import _ from "lodash";
 import {
-  itemorderlist,
+  cartlist,
   itemorderdelete,
   itemorderupdate,
   itemordersave
@@ -267,7 +267,7 @@ export default {
         { criteria: criteria }
       );
       this.downloadparams = params;
-      itemorderlist(params)
+      cartlist(params)
         .then(response => {
           if (response.code === -100) {
             this.$notify({
