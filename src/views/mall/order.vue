@@ -83,7 +83,7 @@
       <el-table-column
         min-width="130px"
         sortable="custom"
-        prop="address.name"
+        prop="name"
         label="收件人姓名"
         show-overflow-tooltip
         align="center"
@@ -92,7 +92,7 @@
       <el-table-column
         min-width="110px"
         sortable="custom"
-        prop="address.tel"
+        prop="tel"
         label="收件人电话"
         show-overflow-tooltip
         align="center"
@@ -101,7 +101,7 @@
       <el-table-column
         min-width="130px"
         sortable="custom"
-        prop="address.addressDetail"
+        prop="address"
         label="收件人地址"
         show-overflow-tooltip
         align="center"
@@ -121,15 +121,6 @@
         sortable="custom"
         prop="fddsj"
         label="订单时间"
-        show-overflow-tooltip
-        align="left"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="110px"
-        sortable="custom"
-        prop="fddsl"
-        label="订单数量"
         show-overflow-tooltip
         align="left"
         header-align="center"
@@ -190,20 +181,16 @@
             <el-button slot="append" @click="onOpenDialog('user')">用户列表</el-button>
           </el-input>
         </el-form-item>
-        <el-form-item prop="address.name" label="收件人姓名" :error="form.errors.address">
-          <el-input v-model="form.fields.address.name" placeholder="订单人姓名">
+        <el-form-item prop="name" label="收件人姓名" :error="form.errors.name">
+          <el-input v-model="form.fields.name" placeholder="订单人姓名">
             <!-- <el-button slot="append" @click="onOpenDialog('address')">地址列表</el-button> -->
           </el-input>
         </el-form-item>
-        <el-form-item prop="address.tel" label="收件人电话" :error="form.errors.address">
-          <el-input v-model="form.fields.address.tel" readonly placeholder="收件人电话"></el-input>
+        <el-form-item prop="tel" label="收件人电话" :error="form.errors.tel">
+          <el-input v-model="form.fields.tel" readonly placeholder="收件人电话"></el-input>
         </el-form-item>
-        <el-form-item prop="address.addressDetail" label="收件人地址" :error="form.errors.address">
-          <el-select
-            v-model="form.fields.address.addressDetail"
-            @change="onChangeadd"
-            placeholder="请选择"
-          >
+        <el-form-item prop="address" label="收件人地址" :error="form.errors.address">
+          <el-select v-model="form.fields.address" @change="onChangeadd" placeholder="请选择">
             <el-option
               v-for="item in selectAddress"
               :key="item.value"
@@ -215,7 +202,7 @@
         </el-form-item>
 
         <el-form-item prop="fddbh" label="订单编号" :error="form.errors.fddbh">
-          <el-input v-model="form.fields.fddbh" placeholder="订单编号"></el-input>
+          <el-input v-model="form.fields.fddbh" readonly placeholder="订单编号"></el-input>
         </el-form-item>
         <el-form-item prop="fddsj" label="订单时间" :error="form.errors.fddsj">
           <el-date-picker
@@ -223,11 +210,8 @@
             v-model="form.fields.fddsj"
             type="date"
             placeholder="订单时间"
-            value-format="yyyy-MM-dd"
+            value-format="yyyyMMdd"
           ></el-date-picker>
-        </el-form-item>
-        <el-form-item prop="fddsl" label="订单数量" :error="form.errors.fddsl">
-          <el-input @change="onChangeyf" v-model="form.fields.fddsl" placeholder="订单数量"></el-input>
         </el-form-item>
         <el-form-item prop="fddje" label="订单金额" :error="form.errors.fddje">
           <el-input v-model="form.fields.fddje" placeholder="订单金额"></el-input>
@@ -293,6 +277,7 @@ import { addressshow } from "../../api/mall/address.js";
 import dayjs from "dayjs";
 const today = new Date();
 const todayStr = dayjs(today).format("YYYY-MM-DD");
+const timeStr = dayjs(today).format("YYYYMMDDHHmmss");
 export default {
   mixins: [serversort, types, table, query, importer, check],
   data() {
@@ -398,9 +383,11 @@ export default {
         errors: {},
         fields: {
           user: { usermc: "" },
-          address: { name: "", tel: "", addressDetail: "", id: "" },
+          name: "",
+          tel: "",
+          addressDetail: "",
           fdddh: "",
-          fddbh: "",
+          fddbh: timeStr,
           fddsj: todayStr,
           fddsl: 1,
           fddje: 0,
@@ -613,14 +600,12 @@ export default {
     reset: function() {
       this.form.fields = {
         user: { usermc: "" },
-        address: {
-          name: "",
-          tel: "",
-          addressDetail: "",
-          id: ""
-        },
+
+        name: "",
+        tel: "",
+        addressDetail: "",
         fdddh: "",
-        fddbh: "",
+        fddbh: timeStr,
         fddsj: todayStr,
         fddsl: 1,
         fddje: 0,
@@ -661,33 +646,17 @@ export default {
         const selectAddress = [];
         addresses.forEach((item, index) => {
           if (index === 0) {
-            this.form.fields.address.name = item.name;
-            this.form.fields.address.tel = item.tel;
-            this.form.fields.address.id = item.id;
-            this.form.fields.address.addressDetail = item.id;
+            this.form.fields.name = item.name;
+            this.form.fields.tel = item.tel;
+            this.form.fields.id = item.id;
+            this.form.fields.addressDetail = item.id;
           }
           let sel = { value: item.id, label: item.addressDetail };
           selectAddress.push(sel);
         });
         this.selectAddress = selectAddress;
-        // for(let i = 0; i < address.length;i ++){
-        //   this.form.fields.address.fname = address[0].name
-        //   this.form.fields.fdddh = address[0].tel;
-        //   this.form.fields.address.addressDetail = address[0].county;
-        // }
       }
     },
-    // selectAddress(row, show) {
-    //   this.addressvisible = show;
-    //   if (row) {
-    //     this.form.fields.address = {
-    //       id: row.id,
-    //       fname: row.name
-    //     };
-    //     this.form.fields.fdddh = row.tel;
-    //     this.form.fields.address.addressDetail = row.county;
-    //   }
-    // },
     onCloseDialog(type = "address") {
       this[`${type}visible`] = false;
     },
@@ -703,12 +672,9 @@ export default {
         debugger;
         addressshow({ id: value }).then(res => {
           const { row } = res;
-          this.form.fields.address = {
-            id: row.id,
-            name: row.name,
-            tel: row.tel,
-            addressDetail: row.id
-          };
+          this.form.fields.name = row.name;
+          this.form.fields.tel = row.tel;
+          this.form.fields.address = row.addressDetail;
         });
       }
     }

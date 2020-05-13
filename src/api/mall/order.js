@@ -4,7 +4,7 @@ const prefix = "";
 
 
 export const morderlist = () => {
-    return axios.get(`${prefix}morder/index`);
+    return axios.get(`${prefix}morder/all`);
 };
 
 export const morderupdate = params => {

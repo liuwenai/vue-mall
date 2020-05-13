@@ -372,8 +372,9 @@ export default {
         { sort: serversort },
         { criteria: criteria }
       )
-      this.downloadparams = params
-      booklist(params)
+      debugger
+      // this.downloadparams = params
+      booklist(criteria)
         .then((response) => {
           if (response.code === -100) {
             this.$notify({
