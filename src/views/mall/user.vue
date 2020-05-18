@@ -16,8 +16,6 @@
                     >
                       <el-option label="账号" value="userzh"></el-option>
                       <el-option label="用户名" value="usermc"></el-option>
-                      <el-option label="电话" value="phone"></el-option>
-                      <el-option label="密码" value="password"></el-option>
                     </el-select>
                     <el-select
                       v-model="item.type"
@@ -50,12 +48,6 @@
                   :disabled="canOperate"
                   @click="addAddress"
                 >增加地址</el-button>
-                <el-button
-                  type="primary"
-                  size="mini"
-                  :disabled="canOperate"
-                  @click="addCart"
-                >购物车</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -102,7 +94,7 @@
                 min-width="90px"
                 sortable="custom"
                 prop="phone"
-                label="电话"
+                label="绑定手机号"
                 show-overflow-tooltip
                 align="center"
                 header-align="center"
@@ -130,15 +122,7 @@
           </div>
           <div class="grid-footer">
             <div ref="footer">
-              <el-pagination
-                @size-change="handlePage"
-                @current-change="handleCurPage"
-                :page-sizes="[20, 50, 200]"
-                :page-size="max"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="total"
-                style="float:right;"
-              ></el-pagination>
+              <el-pagination layout="total,prev, pager, next" :total="total" style="float:right;"></el-pagination>
             </div>
           </div>
         </div>
@@ -161,7 +145,6 @@
                   @selection-change="selsChange"
                   @sort-change="onSortChange"
                 >
-                  <el-table-column type="selection" header-align="center" align="center"></el-table-column>
                   <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
                   <!-- <el-table-column min-width="110px" sortable="custom" prop="fdwbh" label="单位编号" align="center"></el-table-column> -->
                   <el-table-column
@@ -243,63 +226,6 @@
                         size="mini"
                         class="el-icon-delete"
                         @click="handleDelad('scope.$index',scope.row)"
-                      ></i>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="购物车" name="taborder">
-                <el-table
-                  ref="elxOrder"
-                  class="click-table"
-                  :height="childTableHeight"
-                  :data="orderlist"
-                  v-loading="showLoading"
-                  highlight-current-row
-                  stripe
-                  border
-                  @selection-change="selsChange"
-                  @sort-change="onSortChange"
-                >
-                  <!-- <el-table-column
-                    type="selection"
-                    header-align="center"
-                    align="center"
-                  ></el-table-column>-->
-                  <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
-                  <el-table-column
-                    min-width="130px"
-                    sortable="custom"
-                    prop="goodsId"
-                    label="商品ID"
-                    show-overflow-tooltip
-                    align="center"
-                    header-align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    min-width="110px"
-                    sortable="custom"
-                    prop="number"
-                    label="商品数量"
-                    show-overflow-tooltip
-                    align="center"
-                    header-align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    label="操作"
-                    header-align="center"
-                    align="center"
-                    width="90"
-                    fixed="right"
-                  >
-                    <template slot-scope="scope">
-                      <i class="el-icon-edit" size="mini" @click="operatecart('edit',scope.row)"></i>
-                      &nbsp;&nbsp;&nbsp;
-                      <i
-                        type="danger"
-                        size="mini"
-                        class="el-icon-delete"
-                        @click="handleDelcart('scope.$index',scope.row)"
                       ></i>
                     </template>
                   </el-table-column>
@@ -570,7 +496,7 @@ export default {
             { type: "string", message: "详细地址必须为字符串", trigger: "blur" }
           ],
           default: [
-            { required: true, message: "默认地址不能为空", trigger: "blur" },
+            { required: true, message: "默认地址不能为空", trigger: "blur" }
             // { type: "string", message: "默认地址必须为字符串", trigger: "blur" }
           ]
         },
@@ -592,7 +518,7 @@ export default {
         edit: false,
         rules: {
           goodsId: [
-            { required: true, message: "商品ID不能为空", trigger: "blur" },
+            { required: true, message: "商品ID不能为空", trigger: "blur" }
             // { type: "string", message: "商品ID必须为字符串", trigger: "blur" }
           ],
           number: [
@@ -646,7 +572,7 @@ export default {
       this.selrow = {};
       this.showLoading = true;
       this.addresslist = [];
-      this.orderlist= [];
+      this.orderlist = [];
       let criteria = {};
       const serversort = {};
       serversort[this.query.sort] = this.query.order;
@@ -1003,7 +929,7 @@ export default {
           });
         });
     },
-    addCart(){
+    addCart() {
       this.title = "新增地址";
       this.formcart.visible = true;
     },

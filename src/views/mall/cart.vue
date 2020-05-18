@@ -6,9 +6,7 @@
           <el-form-item v-for="(item, index) in query.cols" :key="index">
             <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
               <el-select v-model="item.col" slot="prepend" placeholder="请选择" style="width:110px;">
-                <el-option label="收件人姓名" value="name"></el-option>
-                <el-option label="收件人电话" value="tel"></el-option>
-                <el-option label="地址" value="itemorder"></el-option>
+                <el-option label="用户名" value="name"></el-option>
               </el-select>
               <el-select v-model="item.type" slot="append" placeholder="请选择" style="width:70px;">
                 <el-option label="模糊" value="%"></el-option>
@@ -23,14 +21,14 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" size="mini" @click="load">查询</el-button>
-            <el-button type="primary" size="mini" @click="groupQuery(16)">组合查询</el-button>
+            <!-- <el-button type="primary" size="mini" @click="groupQuery(16)">组合查询</el-button> -->
           </el-form-item>
         </div>
-        <el-form-item>
+        <!-- <el-form-item>
           <el-button type="primary" size="mini" @click="operate('add')">新增</el-button>
           <el-button type="primary" size="mini" :disabled="canOperate" @click="onEdit">编辑</el-button>
           <el-button type="primary" size="mini" :disabled="canOperate" @click="onDelete">删除</el-button>
-        </el-form-item>
+        </el-form-item>-->
         <!-- <el-form-item>
           <el-upload
             :headers="header"
@@ -48,56 +46,87 @@
         </el-form-item>-->
       </el-form>
     </template>
-    <el-table
-      :height="tableHeight"
-      :data="rows"
-      v-loading="showLoading"
-      highlight-current-row
-      stripe
-      border
-      @selection-change="selsChange"
-      @sort-change="onSortChange"
-      @row-click="onRowClick"
-    >
-      <el-table-column type="selection" header-align="center" align="center"></el-table-column>
-      <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
-      <!-- <el-table-column min-width="110px" sortable="custom" prop="fdwbh" label="单位编号" align="center"></el-table-column> -->
-      <el-table-column
-        min-width="130px"
-        sortable="custom"
-        prop="user.usermc"
-        label="用户"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="130px"
-        sortable="custom"
-        prop="goodsId"
-        label="商品ID"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="110px"
-        sortable="custom"
-        prop="number"
-        label="商品数量"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-    </el-table>
+    <el-row>
+      <el-col :span="8">
+        <el-table
+          :height="tableHeight"
+          :data="rows"
+          v-loading="showLoading"
+          highlight-current-row
+          stripe
+          border
+          @selection-change="selsChange"
+          @sort-change="onSortChange"
+          @row-click="onRowClick"
+        >
+          <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
+          <el-table-column
+            min-width="130px"
+            sortable="custom"
+            prop="user.usermc"
+            label="用户"
+            show-overflow-tooltip
+            align="center"
+            header-align="center"
+          ></el-table-column>
+        </el-table>
+      </el-col>
+      <el-col :span="16">
+        <el-table
+          :height="tableHeight"
+          :data="cart"
+          v-loading="showLoading"
+          highlight-current-row
+          stripe
+          border
+        >
+          <!-- <el-table-column type="selection" header-align="center" align="center"></el-table-column> -->
+          <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
+          <!-- <el-table-column min-width="110px" sortable="custom" prop="fdwbh" label="单位编号" align="center"></el-table-column> -->
+          <el-table-column
+            min-width="130px"
+            sortable="custom"
+            prop="id"
+            label="商品ID"
+            show-overflow-tooltip
+            align="center"
+            header-align="center"
+          ></el-table-column>
+          <el-table-column
+            min-width="130px"
+            sortable="custom"
+            prop="title"
+            label="书名"
+            show-overflow-tooltip
+            align="center"
+            header-align="center"
+          ></el-table-column>
+          <el-table-column
+            min-width="130px"
+            sortable="custom"
+            prop="price"
+            label="价格（元）"
+            show-overflow-tooltip
+            align="center"
+            header-align="center"
+          ></el-table-column>
+          <el-table-column
+            min-width="130px"
+            sortable="custom"
+            prop="gmsl"
+            label="购买数量"
+            show-overflow-tooltip
+            align="center"
+            header-align="center"
+          ></el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
+
     <template slot="footer">
-      <div ref="footer">
+       <div ref="footer">
         <el-pagination
-          @size-change="handlePage"
-          @current-change="handleCurPage"
-          :page-sizes="[20, 50, 100]"
-          :page-size="max"
-          layout="total, sizes, prev, pager, next, jumper"
+          layout="total,prev, pager, next"
           :total="total"
           style="float:right;"
         ></el-pagination>
@@ -195,6 +224,7 @@ export default {
       },
       sels: [], // 列表选中列
       rows: [],
+      cart: [],
       total: 0,
       max: 20,
       offset: 0,
@@ -210,7 +240,7 @@ export default {
             { type: "string", message: "用户必须为字符串", trigger: "blur" }
           ],
           goodsId: [
-            { required: true, message: "商品ID不能为空", trigger: "blur" },
+            { required: true, message: "商品ID不能为空", trigger: "blur" }
             // { type: "string", message: "商品ID必须为字符串", trigger: "blur" }
           ],
           number: [
@@ -267,7 +297,7 @@ export default {
         { criteria: criteria }
       );
       this.downloadparams = params;
-      cartlist(params)
+      cartlist()
         .then(response => {
           if (response.code === -100) {
             this.$notify({
@@ -455,6 +485,10 @@ export default {
     // 表格数据行点击
     onRowClick(row, col, event) {
       this.selrow = row;
+      this.loadCart()
+    },
+    loadCart(){
+      this.cart = this.selrow.books
     },
     // onDownload() {
     //   const url = fileAction("itemorder", "download");
