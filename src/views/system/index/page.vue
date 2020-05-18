@@ -48,9 +48,8 @@
     </el-row>
     <el-divider />
     <el-row class="grid-content-row">
-      <el-col :span="24">
+      <!-- <el-col :span="24">
         <el-table :data="flows" highlight-current-row border show-summary>
-          <!-- <el-table-column type="selection" header-align="center" align="center"></el-table-column> -->
           <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
           <el-table-column
             v-if="false"
@@ -77,7 +76,7 @@
             </template>
           </el-table-column>
         </el-table>
-      </el-col>
+      </el-col> -->
     </el-row>
     <!-- 按年汇总人数 -->
     <el-row>
@@ -86,17 +85,9 @@
       </el-col>
     </el-row>
     <!-- 国家数据 -->
-    <el-row>
-      <el-col>
-        <ve-map :data="countryChart" :extend="chartExtend" :settings="chartSettings" ></ve-map>
-      </el-col>
-    </el-row>
+    
     <!-- 单位数据 -->
-    <el-row>
-      <el-col :span="24" class="grid-bottom-row">
-        <ve-line :data="departmentChart"></ve-line>
-      </el-col>
-    </el-row>
+    
 
     <!-- </div> -->
   </d2-container>
