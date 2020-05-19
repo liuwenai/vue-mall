@@ -1,36 +1,36 @@
-import { fileAction } from '../api/file'
+import { bookUpload } from '../api/mall/book'
 
 import _ from 'lodash'
 import util from '@/libs/util.js'
 
 export default {
-  data () {
+  data() {
     return {
       pictureDialogVisible: false,
       dialogImageUrl: '',
       showfile: true,
       loadingtext: '',
-      fileAction: fileAction,
+      bookUpload: bookUpload,
       uploadParam: {},
       header: {
         token: ''
       }
     }
   },
-  mounted () {
+  mounted() {
     const token = util.cookies.get('token')
-    this.header = { token: token }
+    // this.header = { 'Authorization: Bearer ': token }
   },
   methods: {
     // 上传前处理
-    doBefore () {},
-    doLast () {},
-    beforeUpload (file) {
-      const token = util.cookies.get('token')
-      this.header = { token: token }
+    doBefore() { },
+    doLast() { },
+    beforeUpload(file) {
+      // const token = util.cookies.get('token')
+      // this.header = { 'Authorization: Bearer ': token }
       this.doBefore()
     },
-    uploadSuccess (response) {
+    uploadSuccess(response) {
       debugger
       this.loadingtext = ''
       this.showfile = false
@@ -55,12 +55,12 @@ export default {
         type,
         duration: 0
       })
-      this.doLast()
+      this.load()
     },
-    onProgress (event, file, fileList) {
+    onProgress(event, file, fileList) {
       this.showLoading = true
       this.loadingtext = '上传处理中...'
     },
-    showUploadError (errors) {}
+    showUploadError(errors) { }
   }
 }

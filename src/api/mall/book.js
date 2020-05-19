@@ -16,3 +16,11 @@ export const bookdelete = (params) => {
 export const booksave = (params) => {
   return axios.post(`${prefix}book/save`, params)
 }
+
+// export const bookUpload = () => {
+//   return axios.post(`${prefix}upload`)
+// }
+
+export const bookUpload = (controller, action = 'upload') => {
+  return 'http://localhost:9090/' + `${prefix}${controller}/${action}`
+}

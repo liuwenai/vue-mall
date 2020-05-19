@@ -30,6 +30,18 @@
           <el-button type="primary" size="mini" :disabled="canOperate" @click="onEdit">编辑</el-button>
           <el-button type="primary" size="mini" :disabled="canOperate" @click="onDelete">删除</el-button>
         </el-form-item>
+        <!-- <el-form-item>
+          <el-upload
+            style="width:40px;"
+            :show-file-list="false"
+            :headers="header"
+            :action="bookUpload('book','upload')"
+            :on-progress="onProgress"
+            :on-success="uploadSuccess"
+          >
+          <el-button type="primary" size="mini" :disabled="canOperate">增加图片</el-button>
+          </el-upload>
+        </el-form-item>-->
       </el-form>
     </template>
     <el-table
@@ -103,11 +115,7 @@
     </el-table>
     <template slot="footer">
       <div ref="footer">
-        <el-pagination
-          layout="total,prev, pager, next"
-          :total="total"
-          style="float:right;"
-        ></el-pagination>
+        <el-pagination layout="total,prev, pager, next" :total="total" style="float:right;"></el-pagination>
       </div>
     </template>
     <el-dialog
@@ -130,8 +138,18 @@
             <el-button slot="append" @click="onOpenDialog('author')">作者列表</el-button>
           </el-input>
         </el-form-item>
-        <el-form-item prop="url" label="图片" :error="form.errors.url">
-          <el-input v-model="form.fields.url" placeholder="图片"></el-input>
+        <el-form-item v-if="title === '编辑'" prop="url" label="图片" :error="form.errors.url">
+          <el-upload
+            :data="uploadparams"
+            :headers="header"
+            :action="bookUpload('image')"
+            list-type="picture-card"
+            :on-progress="onProgress"
+            :on-success="uploadSuccess"
+            :before-upload="beforeUpload"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
         </el-form-item>
         <el-form-item prop="price" label="价格" :error="form.errors.price">
           <el-input v-model="form.fields.price" placeholder="价格"></el-input>
@@ -175,17 +193,21 @@ import query from "../../mix/query";
 import importer from "../../mix/importer";
 import check from "../../mix/check";
 import _ from "lodash";
+import util from "@/libs/util.js";
 import {
   booklist,
   bookdelete,
   bookupdate,
-  booksave
+  booksave,
+  bookUpload
 } from "../../api/mall/book.js";
-
 export default {
   mixins: [serversort, types, table, query, importer, check],
   data() {
     return {
+      dialogImageUrl: "",
+      dialogVisible: false,
+      uploadparams: { id: "", fmc: "" }, // 上传参数
       title: "",
       authorvisible: false,
       authorparams: {},
@@ -405,6 +427,7 @@ export default {
             () => {
               this.form.loading = true;
               let params = _.assign({}, this.form.fields);
+              debugger;
               this.form
                 .url(params)
                 .then(response => {
@@ -470,7 +493,11 @@ export default {
         this.form.visible = true;
         this.title = "编辑";
         this.form.fields = _.assign({}, { ...this.selrow });
+        debugger
         this.form.url = bookupdate;
+        const token = util.cookies.get("token");
+        this.header = { Authorization: "Bearer " + token };
+        this.uploadparams = {id: this.selrow.id }; // 设置附件上传额外参数
       }
     },
     // 删除数据
