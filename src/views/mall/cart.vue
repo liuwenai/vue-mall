@@ -124,12 +124,8 @@
     </el-row>
 
     <template slot="footer">
-       <div ref="footer">
-        <el-pagination
-          layout="total,prev, pager, next"
-          :total="total"
-          style="float:right;"
-        ></el-pagination>
+      <div ref="footer">
+        <el-pagination layout="total,prev, pager, next" :total="total" style="float:right;"></el-pagination>
       </div>
     </template>
     <el-dialog
@@ -485,10 +481,10 @@ export default {
     // 表格数据行点击
     onRowClick(row, col, event) {
       this.selrow = row;
-      this.loadCart()
+      this.loadCart();
     },
-    loadCart(){
-      this.cart = this.selrow.books
+    loadCart() {
+      this.cart = this.selrow.books;
     },
     // onDownload() {
     //   const url = fileAction("itemorder", "download");

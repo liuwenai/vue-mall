@@ -1,181 +1,245 @@
 <template>
   <d2-container ref="container">
-    <template slot="header">
-      <el-form class="topHorizontal" :inline="true" :model="query" ref="header">
-        <!-- <el-form-item label="订单状态">
-          <el-select v-model="query.fddzt" placeholder="订单状态" style="width:110px">
-            <el-option v-for="(value, key) in fddztMap" :key="key" :label="value" :value="key"></el-option>
-          </el-select>
-        </el-form-item> -->
-        <div>
-          <el-form-item v-for="(item, index) in query.cols" :key="index">
-            <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
-              <el-select v-model="item.col" slot="prepend" placeholder="请选择" style="width:110px;">
-                <el-option label="收件人姓名" value="name"></el-option>
-              </el-select>
-              <el-select v-model="item.type" slot="append" placeholder="请选择" style="width:70px;">
-                <el-option label="模糊" value="%"></el-option>
-                <el-option label="精确" value></el-option>
-              </el-select>
-            </el-input>
-          </el-form-item>
+    <el-row class="tyyks-row">
+      <el-col :span="24" v-if="showheader">
+        <div class="grid-content bg-purple">
+          <div class="grid-header">
+            <el-form class="topHorizontal" :inline="true" ref="header">
+              <div>
+                <el-form-item v-for="(item, index) in query.cols" :key="index">
+                  <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
+                    <el-select
+                      v-model="item.col"
+                      slot="prepend"
+                      placeholder="请选择"
+                      style="width:110px;"
+                    >
+                      <el-option label="收件人姓名" value="name"></el-option>
+                    </el-select>
+                    <el-select
+                      v-model="item.type"
+                      slot="append"
+                      placeholder="请选择"
+                      style="width:70px;"
+                    >
+                      <el-option label="模糊" value="%"></el-option>
+                      <el-option label="精确" value></el-option>
+                    </el-select>
+                  </el-input>
+                </el-form-item>
+              </div>
+              <div>
+                <el-form-item>
+                  <el-button type="primary" size="mini" @click="loadcx">查询</el-button>
+                </el-form-item>
+              </div>
+              <el-form-item>
+                <el-button type="primary" size="mini" @click="operate('add')">新增</el-button>
+                <el-button type="primary" size="mini" :disabled="canOperate" @click="onEdit">编辑</el-button>
+                <el-button type="primary" size="mini" :disabled="canOperate" @click="onDelete">删除</el-button>
+                <el-button
+                  type="primary"
+                  size="mini"
+                  :disabled="canOperate"
+                  @click="addAddress"
+                >增加地址</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+          <div class="grid-main">
+            <el-table
+              :height="firstTableHeight"
+              :data="rows"
+              v-loading="showLoading"
+              highlight-current-row
+              stripe
+              border
+              @selection-change="selsChange"
+              @sort-change="onSortChange"
+              @row-click="onRowClick"
+            >
+              <el-table-column type="selection" header-align="center" align="center"></el-table-column>
+              <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
+              <!-- <el-table-column min-width="110px" sortable="custom" prop="fdwbh" label="单位编号" align="center"></el-table-column> -->
+              <el-table-column
+                min-width="130px"
+                sortable="custom"
+                prop="user.usermc"
+                label="用户"
+                show-overflow-tooltip
+                align="center"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="130px"
+                sortable="custom"
+                prop="name"
+                label="收件人姓名"
+                show-overflow-tooltip
+                align="center"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="110px"
+                sortable="custom"
+                prop="province"
+                label="省份"
+                show-overflow-tooltip
+                align="center"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="110px"
+                sortable="custom"
+                prop="city"
+                label="城市"
+                show-overflow-tooltip
+                align="center"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="110px"
+                sortable="custom"
+                prop="county"
+                label="区县"
+                show-overflow-tooltip
+                align="center"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="150px"
+                sortable="custom"
+                prop="addressDetail"
+                label="详细地址"
+                show-overflow-tooltip
+                align="center"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="150px"
+                sortable="custom"
+                prop="address"
+                label="地址"
+                show-overflow-tooltip
+                align="center"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="140px"
+                sortable="custom"
+                prop="fddbh"
+                label="订单编号"
+                show-overflow-tooltip
+                header-align="center"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="140px"
+                sortable="custom"
+                prop="fddsj"
+                label="订单时间"
+                show-overflow-tooltip
+                align="left"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="110px"
+                sortable="custom"
+                prop="fddje"
+                label="订单金额"
+                show-overflow-tooltip
+                align="left"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="110px"
+                sortable="custom"
+                prop="fddyf"
+                label="订单邮费"
+                show-overflow-tooltip
+                align="left"
+                header-align="center"
+              ></el-table-column>
+              <el-table-column
+                min-width="110px"
+                sortable="custom"
+                prop="fddzt"
+                label="订单状态"
+                show-overflow-tooltip
+                align="left"
+                :formatter="formmatfddzt"
+                header-align="center"
+              ></el-table-column>
+            </el-table>
+          </div>
+          <div class="grid-footer">
+            <div ref="footer">
+              <el-pagination layout="total,prev, pager, next" :total="total" style="float:right;"></el-pagination>
+            </div>
+          </div>
         </div>
-        <div>
-          <el-form-item>
-            <el-button type="primary" size="mini" @click="loadcx">查询</el-button>
-          </el-form-item>
+      </el-col>
+
+      <el-col :span="24">
+        <div class="grid-content bg-purple">
+          <div class="grid-main">
+            <el-tabs type="border-card" v-model="tabname">
+              <el-tab-pane label="购买书籍列表" name="tabbook">
+                <el-table
+                  :height="childTableHeight"
+                  :data="books"
+                  v-loading="showLoading"
+                  highlight-current-row
+                  stripe
+                  border
+                >
+                  <!-- <el-table-column type="selection" header-align="center" align="center"></el-table-column> -->
+                  <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
+                  <!-- <el-table-column min-width="110px" sortable="custom" prop="fdwbh" label="单位编号" align="center"></el-table-column> -->
+                  <el-table-column
+                    min-width="130px"
+                    sortable="custom"
+                    prop="id"
+                    label="商品ID"
+                    show-overflow-tooltip
+                    align="center"
+                    header-align="center"
+                  ></el-table-column>
+                  <el-table-column
+                    min-width="130px"
+                    sortable="custom"
+                    prop="title"
+                    label="书名"
+                    show-overflow-tooltip
+                    align="center"
+                    header-align="center"
+                  ></el-table-column>
+                  <el-table-column
+                    min-width="130px"
+                    sortable="custom"
+                    prop="price"
+                    label="价格（元）"
+                    show-overflow-tooltip
+                    align="center"
+                    header-align="center"
+                  ></el-table-column>
+                  <el-table-column
+                    min-width="130px"
+                    sortable="custom"
+                    prop="gmsl"
+                    label="购买数量"
+                    show-overflow-tooltip
+                    align="center"
+                    header-align="center"
+                  ></el-table-column>
+                </el-table>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
         </div>
-        <el-form-item>
-          <!-- <el-button type="primary" size="mini" @click="operate('add')">新增</el-button> -->
-          <el-button type="primary" size="mini" :disabled="canOperate" @click="onEdit">编辑</el-button>
-          <el-button type="primary" size="mini" :disabled="canOperate" @click="onDelete">删除</el-button>
-        </el-form-item>
-        <!-- <el-form-item>
-          <el-upload
-            :headers="header"
-            :show-file-list="false"
-            :on-progress="onProgress"
-            :action="fileAction('morder','upload')"
-            :on-success="uploadSuccess"
-            :before-upload="beforeUpload"
-          >
-            <el-button type="primary" :loading="btntitle === '导入' " size="mini" icon="upload">导入</el-button>
-          </el-upload>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" size="mini" :loading="btntitle === '导出' " @click="onDownload">导出</el-button>
-        </el-form-item>-->
-      </el-form>
-    </template>
-    <el-table
-      :height="tableHeight"
-      :data="rows"
-      v-loading="showLoading"
-      highlight-current-row
-      stripe
-      border
-      @selection-change="selsChange"
-      @sort-change="onSortChange"
-      @row-click="onRowClick"
-    >
-      <el-table-column type="selection" header-align="center" align="center"></el-table-column>
-      <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
-      <!-- <el-table-column min-width="110px" sortable="custom" prop="fdwbh" label="单位编号" align="center"></el-table-column> -->
-      <el-table-column
-        min-width="130px"
-        sortable="custom"
-        prop="user.usermc"
-        label="用户"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="130px"
-        sortable="custom"
-        prop="name"
-        label="收件人姓名"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="110px"
-        sortable="custom"
-        prop="province"
-        label="省份"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="110px"
-        sortable="custom"
-        prop="city"
-        label="城市"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="110px"
-        sortable="custom"
-        prop="county"
-        label="区县"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="150px"
-        sortable="custom"
-        prop="addressDetail"
-        label="详细地址"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="150px"
-        sortable="custom"
-        prop="address"
-        label="地址"
-        show-overflow-tooltip
-        align="center"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="140px"
-        sortable="custom"
-        prop="fddbh"
-        label="订单编号"
-        show-overflow-tooltip
-        header-align="center"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="140px"
-        sortable="custom"
-        prop="fddsj"
-        label="订单时间"
-        show-overflow-tooltip
-        align="left"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="110px"
-        sortable="custom"
-        prop="fddje"
-        label="订单金额"
-        show-overflow-tooltip
-        align="left"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="110px"
-        sortable="custom"
-        prop="fddyf"
-        label="订单邮费"
-        show-overflow-tooltip
-        align="left"
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        min-width="110px"
-        sortable="custom"
-        prop="fddzt"
-        label="订单状态"
-        show-overflow-tooltip
-        align="left"
-        :formatter="formmatfddzt"
-        header-align="center"
-      ></el-table-column>
-    </el-table>
-    <template slot="footer">
-      <div ref="footer">
-        <el-pagination layout="total,prev, pager, next" :total="total" style="float:right;"></el-pagination>
-      </div>
-    </template>
+      </el-col>
+    </el-row>
+  
     <el-dialog
       v-dialogDrag
       :title="title"
@@ -292,6 +356,13 @@ export default {
   mixins: [serversort, types, table, query, importer, check],
   data() {
     return {
+      tabname: "tabbook",
+      showheader: true,
+      firstTableHeight: 100, // 第一个表格高度
+      containerHeight: 400,
+      childTableHeight: 100,
+      childTempHeight: 100,
+      autotableHeight: 100,
       selectAddress: [],
       selectedaddress: -1,
       uservisible: false,
@@ -421,10 +492,22 @@ export default {
     this.load();
     // this.address()
     this.$nextTick(() => {
-      this.setHeight();
+      this.setTableHeight();
     });
   },
   methods: {
+    setTableHeight: function() {
+      const containerHeight = this.$refs["container"].$el.clientHeight;
+      const headerHeight = this.$refs["header"].$el.parentNode.offsetHeight;
+      const footerHeight = this.$refs["footer"].parentNode.offsetHeight;
+      const dynamicHeight = containerHeight - headerHeight - footerHeight - 54;
+      this.autotableHeight = dynamicHeight;
+      this.tableHeight = dynamicHeight;
+      this.containerHeight = containerHeight;
+      this.childTableHeight = dynamicHeight / 2;
+      this.firstTableHeight = dynamicHeight / 2;
+      this.childTempHeight = dynamicHeight / 2;
+    },
     loadcx() {
       let that = this;
       that.rows = [];
@@ -684,6 +767,10 @@ export default {
     // 表格数据行点击
     onRowClick(row, col, event) {
       this.selrow = row;
+      this.loadOrder();
+    },
+    loadOrder() {
+      this.books = this.selrow.books;
     },
     onOpenDialog(type = "address") {
       this[`${type}visible`] = true;
