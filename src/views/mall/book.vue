@@ -55,7 +55,7 @@
       @sort-change="onSortChange"
       @row-click="onRowClick"
     >
-      <el-table-column type="selection" header-align="center" align="center"></el-table-column>
+      <!-- <el-table-column type="selection" header-align="center" align="center"></el-table-column> -->
       <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
       <!-- <el-table-column min-width="110px" sortable="custom" prop="fdwbh" label="单位编号" align="center"></el-table-column> -->
       <el-table-column
@@ -366,7 +366,6 @@ export default {
         .then(() => {
           this.showLoading = true;
           let params = { id: row.id };
-          debugger
           bookdelete(params)
             .then(response => {
               if (response.code === -100) {
@@ -494,11 +493,11 @@ export default {
         this.form.visible = true;
         this.title = "编辑";
         this.form.fields = _.assign({}, { ...this.selrow });
-        debugger
+        debugger;
         this.form.url = bookupdate;
         const token = util.cookies.get("token");
         this.header = { Authorization: "Bearer " + token };
-        this.uploadparams = {id: this.selrow.id }; // 设置附件上传额外参数
+        this.uploadparams = { id: this.selrow.id }; // 设置附件上传额外参数
       }
     },
     // 删除数据
@@ -525,6 +524,9 @@ export default {
     },
     onCloseDialog(type = "author") {
       this[`${type}visible`] = false;
+    },
+    doLast() {
+      this.form.visible = false;
     }
   }
 };

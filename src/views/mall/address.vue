@@ -6,9 +6,8 @@
           <el-form-item v-for="(item,index) in query.cols" :key="index">
             <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
               <el-select v-model="item.col" slot="prepend" placeholder="请选择" style="width:110px;">
+                <el-option label="用户" value="user.usermc"></el-option>
                 <el-option label="收件人姓名" value="name"></el-option>
-                <el-option label="收件人电话" value="tel"></el-option>
-                <el-option label="地址" value="address"></el-option>
               </el-select>
               <el-select v-model="item.type" slot="append" placeholder="请选择" style="width:70px;">
                 <el-option label="模糊" value="%"></el-option>
@@ -18,12 +17,8 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item v-for="(item,index) in query.cols.length - 1" :key="index">
-            <el-button type="primary" size="mini" @click="removeQuery(index)">删除</el-button>
-          </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="mini" @click="load">查询</el-button>
-            <el-button type="primary" size="mini" @click="groupQuery(16)">组合查询</el-button>
+            <el-button type="primary" size="mini" @click="loadcx">查询</el-button>
           </el-form-item>
         </div>
         <el-form-item>
@@ -59,7 +54,6 @@
       @sort-change="onSortChange"
       @row-click="onRowClick"
     >
-      <el-table-column type="selection" header-align="center" align="center"></el-table-column>
       <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
       <!-- <el-table-column min-width="110px" sortable="custom" prop="fdwbh" label="单位编号" align="center"></el-table-column> -->
       <el-table-column
@@ -325,6 +319,34 @@ export default {
     });
   },
   methods: {
+    loadcx() {
+      let that = this;
+      that.rows = [];
+      that.total = 0;
+      this.query.cols.forEach(item => {
+        if (item.col === "name") {
+          addresslist().then(res => {
+            res.rows.forEach(items => {
+              if (items.name === item.val) {
+                that.rows.push(items);
+                that.total += 1;
+              }
+            });
+          });
+        } else if (item.col === "user.usermc") {
+          addresslist().then(res => {
+            res.rows.forEach(items => {
+              if (items.user.usermc === item.val) {
+                that.rows.push(items);
+                that.total += 1;
+              }
+            });
+          });
+        } else {
+          this.load();
+        }
+      });
+    },
     load() {
       this.selrow = {};
       this.showLoading = true;

@@ -37,12 +37,6 @@
                 <el-button type="primary" size="mini" @click="operate('add')">新增</el-button>
                 <el-button type="primary" size="mini" :disabled="canOperate" @click="onEdit">编辑</el-button>
                 <el-button type="primary" size="mini" :disabled="canOperate" @click="onDelete">删除</el-button>
-                <el-button
-                  type="primary"
-                  size="mini"
-                  :disabled="canOperate"
-                  @click="addAddress"
-                >增加地址</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -380,6 +374,7 @@ export default {
         sort: "dateCreated",
         order: "asc"
       },
+      books:[],
       sels: [], // 列表选中列
       rows: [],
       total: 0,
@@ -529,6 +524,7 @@ export default {
     },
     load() {
       this.selrow = {};
+      this.books = []
       this.showLoading = true;
       let criteria = {};
       const serversort = {};

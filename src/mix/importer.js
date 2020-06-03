@@ -55,7 +55,7 @@ export default {
         type,
         duration: 0
       })
-      this.load()
+      this.form.visible = false;
     },
     onProgress(event, file, fileList) {
       this.showLoading = true
