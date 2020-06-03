@@ -2,22 +2,16 @@
   <d2-container ref="container">
     <template slot="header">
       <el-form class="topHorizontal" :inline="true" :model="query" ref="header">
-        <el-form-item label="订单状态">
+        <!-- <el-form-item label="订单状态">
           <el-select v-model="query.fddzt" placeholder="订单状态" style="width:110px">
             <el-option v-for="(value, key) in fddztMap" :key="key" :label="value" :value="key"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <div>
           <el-form-item v-for="(item, index) in query.cols" :key="index">
             <el-input v-model="item.val" placeholder="查找" :clearable="true" @clear="load">
               <el-select v-model="item.col" slot="prepend" placeholder="请选择" style="width:110px;">
-                <el-option label="收件人姓名" value="fddname"></el-option>
-                <el-option label="订单编号" value="fddbh"></el-option>
-                <el-option label="订单地址" value="address.addressDetail"></el-option>
-                <el-option label="订单时间" value="fddsj"></el-option>
-                <el-option label="订单数量" value="fddsl"></el-option>
-                <el-option label="订单金额" value="fddje"></el-option>
-                <el-option label="订单状态" value="fddzt"></el-option>
+                <el-option label="收件人姓名" value="name"></el-option>
               </el-select>
               <el-select v-model="item.type" slot="append" placeholder="请选择" style="width:70px;">
                 <el-option label="模糊" value="%"></el-option>
@@ -27,16 +21,12 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item v-for="(item, index) in query.cols.length - 1" :key="index">
-            <el-button type="primary" size="mini" @click="removeQuery(index)">删除</el-button>
-          </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="mini" @click="load">查询</el-button>
-            <el-button type="primary" size="mini" @click="groupQuery(16)">组合查询</el-button>
+            <el-button type="primary" size="mini" @click="loadcx">查询</el-button>
           </el-form-item>
         </div>
         <el-form-item>
-          <el-button type="primary" size="mini" @click="operate('add')">新增</el-button>
+          <!-- <el-button type="primary" size="mini" @click="operate('add')">新增</el-button> -->
           <el-button type="primary" size="mini" :disabled="canOperate" @click="onEdit">编辑</el-button>
           <el-button type="primary" size="mini" :disabled="canOperate" @click="onDelete">删除</el-button>
         </el-form-item>
@@ -92,17 +82,44 @@
       <el-table-column
         min-width="110px"
         sortable="custom"
-        prop="tel"
-        label="收件人电话"
+        prop="province"
+        label="省份"
         show-overflow-tooltip
         align="center"
         header-align="center"
       ></el-table-column>
       <el-table-column
-        min-width="130px"
+        min-width="110px"
+        sortable="custom"
+        prop="city"
+        label="城市"
+        show-overflow-tooltip
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="110px"
+        sortable="custom"
+        prop="county"
+        label="区县"
+        show-overflow-tooltip
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="150px"
+        sortable="custom"
+        prop="addressDetail"
+        label="详细地址"
+        show-overflow-tooltip
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="150px"
         sortable="custom"
         prop="address"
-        label="收件人地址"
+        label="地址"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -156,15 +173,7 @@
     </el-table>
     <template slot="footer">
       <div ref="footer">
-        <el-pagination
-          @size-change="handlePage"
-          @current-change="handleCurPage"
-          :page-sizes="[20, 50, 100]"
-          :page-size="max"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          style="float:right;"
-        ></el-pagination>
+        <el-pagination layout="total,prev, pager, next" :total="total" style="float:right;"></el-pagination>
       </div>
     </template>
     <el-dialog
@@ -416,6 +425,25 @@ export default {
     });
   },
   methods: {
+    loadcx() {
+      let that = this;
+      that.rows = [];
+      that.total = 0;
+      this.query.cols.forEach(item => {
+        if (item.col === "name") {
+          morderlist().then(res => {
+            res.rows.forEach(items => {
+              if (items.name === item.val) {
+                that.rows.push(items);
+                that.total += 1;
+              }
+            });
+          });
+        } else {
+          this.load();
+        }
+      });
+    },
     load() {
       this.selrow = {};
       this.showLoading = true;
@@ -628,7 +656,7 @@ export default {
       userlist().then(res => {
         const { rows } = res;
         rows.forEach(items => {
-          debugger
+          debugger;
           if (data.user.usermc === items.usermc) {
             // const addresses = item.addresses;
             const selectAddress = [];

@@ -34,8 +34,8 @@ export default {
       debugger
       this.loadingtext = ''
       this.showfile = false
-      const { code, msg } = response
-      let message = msg
+      const { code, mgs } = response
+      let message = mgs
       let type = 'success'
       if (code === -100) {
         // 失败了，显示具体的数据消息

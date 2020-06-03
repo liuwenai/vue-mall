@@ -30,12 +30,8 @@
                 </el-form-item>
               </div>
               <div>
-                <el-form-item v-for="(item, index) in query.cols.length - 1" :key="index">
-                  <el-button type="primary" size="mini" @click="removeQuery(index)">删除</el-button>
-                </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" size="mini" @click="load">查询</el-button>
-                  <el-button type="primary" size="mini" @click="groupQuery(16)">组合查询</el-button>
+                  <el-button type="primary" size="mini" @click="loadcx">查询</el-button>
                 </el-form-item>
               </div>
               <el-form-item>
@@ -567,7 +563,34 @@ export default {
       this.firstTableHeight = dynamicHeight / 2;
       this.childTempHeight = dynamicHeight / 2;
     },
-
+    loadcx() {
+      let that = this;
+      that.rows = [];
+      that.total = 0;
+      this.query.cols.forEach(item => {
+        if (item.col === "userzh") {
+          userlist().then(res => {
+            res.rows.forEach(items => {
+              if (items.userzh === item.val) {
+                that.rows.push(items);
+                that.total += 1;
+              }
+            });
+          });
+        } else if (item.col === "usermc") {
+          userlist().then(res => {
+            res.rows.forEach(items => {
+              if (items.usermc === item.val) {
+                that.rows.push(items);
+                that.total += 1;
+              }
+            });
+          });
+        } else {
+          this.load();
+        }
+      });
+    },
     load() {
       this.selrow = {};
       this.showLoading = true;

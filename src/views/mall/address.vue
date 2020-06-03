@@ -120,7 +120,16 @@
         min-width="150px"
         sortable="custom"
         prop="addressDetail"
-        label="详细地址地址"
+        label="详细地址"
+        show-overflow-tooltip
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="150px"
+        sortable="custom"
+        prop="code"
+        label="地址编号"
         show-overflow-tooltip
         align="center"
         header-align="center"
@@ -138,15 +147,7 @@
     </el-table>
     <template slot="footer">
       <div ref="footer">
-        <el-pagination
-          @size-change="handlePage"
-          @current-change="handleCurPage"
-          :page-sizes="[20,50,100]"
-          :page-size="max"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          style="float:right;"
-        ></el-pagination>
+        <el-pagination layout="total,prev, pager, next" :total="total" style="float:right;"></el-pagination>
       </div>
     </template>
     <el-dialog

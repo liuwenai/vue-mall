@@ -366,6 +366,7 @@ export default {
         .then(() => {
           this.showLoading = true;
           let params = { id: row.id };
+          debugger
           bookdelete(params)
             .then(response => {
               if (response.code === -100) {

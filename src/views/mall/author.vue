@@ -17,11 +17,8 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item v-for="(item, index) in query.cols.length - 1" :key="index">
-            <el-button type="primary" size="mini" @click="removeQuery(index)">删除</el-button>
-          </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="mini" @click="load">查询</el-button>
+            <el-button type="primary" size="mini" @click="loadcx">查询</el-button>
           </el-form-item>
         </div>
         <el-form-item>
@@ -59,9 +56,7 @@
       row-key="id"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column type="selection" header-align="center" align="center"></el-table-column>
       <el-table-column type="index" label="序号" width="70" align="center"></el-table-column>
-      <!-- <el-table-column min-width="110px" sortable="custom" prop="fdwbh" label="单位编号" align="center"></el-table-column> -->
       <el-table-column
         min-width="130px"
         sortable="custom"
@@ -83,15 +78,7 @@
     </el-table>
     <template slot="footer">
       <div ref="footer">
-        <el-pagination
-          @size-change="handlePage"
-          @current-change="handleCurPage"
-          :page-sizes="[20, 50, 100]"
-          :page-size="max"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          style="float:right;"
-        ></el-pagination>
+        <el-pagination layout="total,prev, pager, next" :total="total" style="float:right;"></el-pagination>
       </div>
     </template>
     <el-dialog
@@ -202,6 +189,34 @@ export default {
     });
   },
   methods: {
+    loadcx() {
+      let that = this;
+      that.rows = [];
+      that.total = 0;
+      this.query.cols.forEach(item => {
+        if (item.col === "name") {
+          authorlist().then(res => {
+            res.rows.forEach(items => {
+              if (items.name === item.val) {
+                that.rows.push(items);
+                that.total += 1;
+              }
+            });
+          });
+        } else if (item.col === "sex") {
+          authorlist().then(res => {
+            res.rows.forEach(items => {
+              if (items.sex === item.val) {
+                that.rows.push(items);
+                that.total += 1;
+              }
+            });
+          });
+        } else {
+          this.load();
+        }
+      });
+    },
     load() {
       this.selrow = {};
       this.showLoading = true;
