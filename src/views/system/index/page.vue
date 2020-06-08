@@ -15,25 +15,25 @@
           </el-col>-->
           <el-col :span="5" class="grid-header">
             <div class="grid-header-click" @click="onOpenRoute('/muser')">
-              <div class="bg-purple grid-header-top">用户总人数</div>
+              <div class="bg-purple grid-header-top">用户列表</div>
               <div class="bg-purple grid-header-center">{{infor.zrs}}</div>
             </div>
           </el-col>
           <el-col :span="5" class="grid-header">
-            <div class="grid-header-click" >
-              <div class="bg-purple grid-header-top">已发货</div>
+            <div class="grid-header-click" @click="onOpenRoute('/book')">
+              <div class="bg-purple grid-header-top">书籍列表</div>
               <div class="bg-purple grid-header-center">{{infor.zcs}}</div>
             </div>
           </el-col>
           <el-col :span="5" class="grid-header">
-            <div class="grid-header-click" >
-              <div class="bg-purple grid-header-top">待发货</div>
+            <div class="grid-header-click" @click="onOpenRoute('/order')">
+              <div class="bg-purple grid-header-top">订单列表</div>
               <div class="bg-purple grid-header-center">{{infor.zjdq}}</div>
             </div>
           </el-col>
           <el-col :span="5" class="grid-header">
-            <div class="grid-header-click">
-              <div class="bg-purple grid-header-top">待评价</div>
+            <div class="grid-header-click" @click="onOpenRoute('/cart')">
+              <div class="bg-purple grid-header-top">购物车</div>
               <div class="bg-purple grid-header-center">{{infor.go}}</div>
             </div>
           </el-col>
@@ -81,7 +81,7 @@
     <!-- 按年汇总人数 -->
     <el-row>
       <el-col :span="24" class="grid-bottom-row">
-        <ve-histogram :data="dateChart"></ve-histogram>
+        <!-- <ve-histogram :data="dateChart"></ve-histogram> -->
       </el-col>
     </el-row>
     <!-- 国家数据 -->
