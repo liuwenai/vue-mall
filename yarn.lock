@@ -1298,25 +1298,6 @@
     string.prototype.padstart "^3.0.0"
     strip-ansi "^6.0.0"
 
-"@vue/cli-shared-utils@^4.3.0":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-4.3.1.tgz#a74bf4d53825d4a4b05a84b03e023974871bc38a"
-  integrity sha512-lcfRalou7Z9jZgIh9PeTIpwDK7RIjr9OxfLGwbdR8czUZYUeUa67zVEMJD0OPYh/CCoREtzNbVfLPb/IYYxWEA==
-  dependencies:
-    "@hapi/joi" "^15.0.1"
-    chalk "^2.4.2"
-    execa "^1.0.0"
-    launch-editor "^2.2.1"
-    lru-cache "^5.1.1"
-    node-ipc "^9.1.1"
-    open "^6.3.0"
-    ora "^3.4.0"
-    read-pkg "^5.1.1"
-    request "^2.88.2"
-    request-promise-native "^1.0.8"
-    semver "^6.1.0"
-    strip-ansi "^6.0.0"
-
 "@vue/component-compiler-utils@^3.0.0", "@vue/component-compiler-utils@^3.0.2":
   version "3.1.0"
   resolved "https://registry.npm.taobao.org/@vue/component-compiler-utils/download/@vue/component-compiler-utils-3.1.0.tgz#64cd394925f5af1f9c3228c66e954536f5311857"
@@ -8403,9 +8384,9 @@ querystring@0.2.0:
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
 
 querystringify@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.npm.taobao.org/querystringify/download/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
-  integrity sha1-YOWl/WSn+L+k0qsu1v30yFutFU4=
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
+  integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.1.0"
@@ -8656,7 +8637,7 @@ request-promise-native@^1.0.5, request-promise-native@^1.0.7, request-promise-na
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.83.0, request@^2.88.2:
+request@^2.83.0:
   version "2.88.2"
   resolved "https://registry.npm.taobao.org/request/download/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha1-1zyRhzHLWofaBH4gcjQUb2ZNErM=
@@ -8725,7 +8706,7 @@ require-main-filename@^2.0.0:
 
 requires-port@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.npm.taobao.org/requires-port/download/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+  resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
 resize-observer-polyfill@^1.5.0:
@@ -10137,9 +10118,9 @@ url-loader@^2.2.0:
     schema-utils "^2.5.0"
 
 url-parse@^1.4.3:
-  version "1.4.7"
-  resolved "https://registry.npm.taobao.org/url-parse/download/url-parse-1.4.7.tgz#a8a83535e8c00a316e403a5db4ac1b9b853ae278"
-  integrity sha1-qKg1NejACjFuQDpdtKwbm4U64ng=
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.3.tgz#71c1303d38fb6639ade183c2992c8cc0686df862"
+  integrity sha512-IIORyIQD9rvj0A4CLWsHkBBJuNqWpFQe224b6j9t/ABmquIS0qDU2pY6kl6AuOrL5OkCXHMCFNe1jBcuAggjvQ==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
@@ -10267,12 +10248,6 @@ vue-cli-plugin-i18n@^0.6.0:
     vue "^2.5.16"
     vue-i18n "^8.0.0"
     vue-i18n-extract "^0.4.13"
-
-"vue-cli-plugin-zysoft@https://gitlab.com/vue-next/vue-cli-plugin-zysoft":
-  version "1.0.0"
-  resolved "https://gitlab.com/vue-next/vue-cli-plugin-zysoft#0eec4d2144eaa3cd7d95ef44ddfef662b28fa90c"
-  dependencies:
-    "@vue/cli-shared-utils" "^4.3.0"
 
 vue-element-extends@^1.2.24:
   version "1.2.24"
